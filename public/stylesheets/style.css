@@ -52,28 +52,43 @@ a {
 }
 
 .photo {
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
     z-index: 2;
     position: relative;
-}
-
-.photo_img {
-    border-radius: 5%;
+    border: 2px solid #2d251a;
+    border-radius: 30px;
+    -moz-border-radius: 30px;
+    -khtml-border-radius: 30px;
+    -webkit-border-radius: 30px;
 }
 
 .actions_bar {
-    background-color: rgba(255,255,0,0.6);
+    background-color: transparent;
     z-index: 3;
     position: absolute;
     width: 500px;
     height: 50px;
-    top: 450px;
+    top: 444px;
     left: 50%;
     margin-left: -250px;
+    margin-bottom: 6px;
     text-align: right;
 }
-.screenshot {
-width: 300px;
+
+.geo {
+    margin: 0px 10px 0px 2px;
 }
+
+.like {
+    margin: 0px 2px 0px 2px;
+}
+
+.screenshot {
+    width: 300px;
+}
+
 #logo {
     float: left;
     margin: 5px 0 5px 100px;

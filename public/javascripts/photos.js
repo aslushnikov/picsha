@@ -7,48 +7,44 @@ $(document).ready(function(){
     });
 });
 
-function swapImageSrc(imageObj, src1, src2) {
-    var src = (imageObj.attr('src') === src1) ? src2 : src1;
-    imageObj.attr('src', src);
-}
-
-function addPhoto(id, src, lon, lat, position) {
-    var photo = '<div class="photo" id="+id+">' +
-        '<img src='+src+' width=500px class="photo_img">' +
+function addPhoto(id, src, lat, lon, position) {
+    var photo = '<div class="photo" id="'+id+'" style="background:url('+src+');">' +
+//        '<img src="'+src+'" width=500px class="photo_img">' +
         '<div class="actions_bar">' +
-        '<img class="like" src="http://images.wikia.com/clubpenguin/images/4/44/Like.png" width=20px height=20px/>' +
-        '<img class="geo" src="geo"/>' +
+        '<img class="like" src="images/heart-no.png"/>' +
+        '<img class="geo" src="images/map.png"/>' +
         '</div>' +
-        '</img>' +
+//        '</img>' +
         '</div>';
     if (position === "top") {
         $("#feed").prepend(photo);
     } else if (position === "bottom") {
         $("#feed").append(photo);
     }
-    var photoDiv = $("#"+id); photoDiv._lon = lon; photoDiv._lat = lat;
+    var photoDiv = $("#"+id); photoDiv._lat = lat; photoDiv._lon = lon;
     $('.like').click(function(){
-        swapImageSrc($(this), "http://images.wikia.com/clubpenguin/images/4/44/Like.png", "http://conecti.ca/wp-content/uploads/2013/04/Facebook-Like.png");
-        likePhoto(id);
+        if ($(this).attr('src') === "images/heart-no.png") {
+            $(this).attr('src', "images/heart-yes.png");
+            likePhoto(id);
+        }
     });
     $('.geo').click(function(){
-        swapImageSrc($(this), "geo.jpg", "geo_opened.jpg");
         //show map will be here
     });
 }
 
-function addPhotoToBottom(id, src, lon, lat) {
+function addPhotoToBottom(id, src, lat, lon) {
     addPhoto(id, src, lon, lat, "bottom");
 }
 
-function addPhotoToTop(id, src, lon, lat) {
+function addPhotoToTop(id, src, lat, lon) {
     addPhoto(id, src, lon, lat, "top");
 }
 
 //client-server stuff
 
-function photoReceived(id, img, lon, lat) {
-    addPhotoToTop(id, img, lon, lat);
+function photoReceived(id, img, lat, lon) {
+    addPhotoToTop(id, img, lat, lon);
 }
 
 function likePhoto(id) {
