@@ -4,10 +4,10 @@ function Server() {
 }
 
 Server.prototype = {
-    _photoReceived: function(data)
+    _photoReceived: function(photo)
     {
         console.log("Photo received");
-        addPhoto(1, data, 1, 1, "top");
+        addPhoto(photo.id, photo.src, photo.longitude, photo.latitude, "top");
     },
 
     sendPhoto: function(base64)

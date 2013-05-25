@@ -37,7 +37,7 @@ app.configure('production', function(){
 });
 
 // Socket.IO
-var activeSockets = [];
+var activeSockets = {};
 
 io.set('transports', [
             'websocket'
@@ -65,14 +65,14 @@ io.set('authorization', function(data, accept) {
 });
 
 io.sockets.on('connection', function (socket) {
+    var sessionID = socket.handshake.sessionID;
     socket.on('photo', function(data) {
-        onPhotoReceived(socket.handshake.sessionID, data);
+        onPhotoReceived(sessionID, data);
     });
     socket.on('disconnect', function() {
-        var index = activeSockets.indexOf(socket);
-        if (index >= 0) activeSockets.splice(index, 1);
+        delete activeSockets[sessionID];
     });
-    activeSockets.push(socket);
+    activeSockets[sessionID] = socket;
 });
 
 // Routing
@@ -108,6 +108,11 @@ var userSchema = mongoose.Schema({
         waitingFor: Number
     })
   , User = mongoose.model('users', userSchema);
+
+// Mapping between sessionID and userID
+function socketForUserId(userId) {
+    return activeSockets[userId];
+}
 
 mongoose.connect('mongodb://localhost/' + DB_NAME);
 var db = mongoose.connection;
@@ -162,6 +167,15 @@ function assocUserWithPhoto(user, photo) {
     user.waitingFor -= 1;
     photo.save();
     user.save();
+    var socket = socketForUserId(user.id);
+    if (socket) {
+        socket.emit("photo", {
+            id: photo.id,
+            src: photo.src,
+            longitude: photo.longitude,
+            latitude: photo.latitude
+        });
+    }
 }
 
 function findPhotoForUser(err, user) {
