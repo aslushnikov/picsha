@@ -14,8 +14,9 @@ if (navigator.getUserMedia) {
 } else {
     video.src = 'somevideo.webm'; // fallback.
 }
-    document.getElementById("take").onclick = snapshot;
-    document.getElementById('take').innerHTML = "Take a Picture";
+    document.getElementById("use").style.display = "inline";
+    document.getElementById("video").style.display = "inline";
+
 }
 
 // Not showing vendor prefixes or code that works cross-browser:
@@ -51,10 +52,9 @@ function snapshot() {
         img.style.top = video.offsetTop + "px";
         ServerBackend.sendPhoto(img.src);
     }
-    document.getElementById("pic").style.display = "block";
-    document.getElementById("take").onclick = retake;
-    document.getElementById('take').innerHTML = "Retake";
-    document.getElementById("use").style.display = "inline";
+   document.getElementById("pic").style.display = "block";
+    /*document.getElementById("take").onclick = retake;*/
+    document.getElementById("use").src = "./images/send.png";
 
 }
 function retake() {
