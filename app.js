@@ -82,7 +82,7 @@ io.sockets.on('connection', function (socket) {
 
 // Routing
 app.get("/", function (req, res) {
-    res.redirect('/index.html');
+    res.redirect('/underconstruction.html');
 });
 
 app.get("/clients", function (req, res) {
