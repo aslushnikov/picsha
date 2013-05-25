@@ -12,8 +12,8 @@ function swapImageSrc(imageObj, src1, src2) {
     imageObj.attr('src', src);
 }
 
-function addPhoto(src, position) {
-    var photo = '<div class="photo">' +
+function addPhoto(id, src, lon, lat, position) {
+    var photo = '<div class="photo" id="+id+">' +
         '<img src='+src+' width=500px height=500px class="photo_img">' +
         '<div class="actions_bar">' +
         '<img class="like" src="http://images.wikia.com/clubpenguin/images/4/44/Like.png" width=20px height=20px/>' +
@@ -26,23 +26,31 @@ function addPhoto(src, position) {
     } else if (position === "bottom") {
         $("#feed").append(photo);
     }
+    var photoDiv = $("#"+id); photoDiv._lon = lon; photoDiv._lat = lat;
     $('.like').click(function(){
         swapImageSrc($(this), "http://images.wikia.com/clubpenguin/images/4/44/Like.png", "http://conecti.ca/wp-content/uploads/2013/04/Facebook-Like.png");
-        //div class photo
-        //$(this).parent().parent();
+        likePhoto(id);
     });
     $('.geo').click(function(){
         swapImageSrc($(this), "geo.jpg", "geo_opened.jpg");
-        //div class photo
-        //$(this).parent().parent();
-
+        //show map will be here
     });
 }
 
-function addPhotoToBottom(src) {
-    addPhoto(src, "bottom");
+function addPhotoToBottom(id, src, lon, lat) {
+    addPhoto(id, src, lon, lat, "bottom");
 }
 
-function addPhotoToTop(src) {
-    addPhoto(src, "top");
+function addPhotoToTop(id, src, lon, lat) {
+    addPhoto(id, src, lon, lat, "top");
+}
+
+//client-server stuff
+
+function photoReceived(id, img, lon, lat) {
+    addPhotoToTop(id, img, lon, lat);
+}
+
+function likePhoto(id) {
+
 }
