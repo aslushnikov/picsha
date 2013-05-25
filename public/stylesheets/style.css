@@ -86,7 +86,7 @@ a {
 }
 
 .screenshot {
-    width: 300px;
+    width: 500px;
 }
 
 #logo {
@@ -101,6 +101,13 @@ a {
     width: 207px;
 }
 .buttons {
-    margin-bottom: 10px;
     margin-top: 90px;
+    margin-bottom: 10px;
+}
+.screens {
+    margin: 0 auto;
+}
+.screens2 {
+    position: relative;
+    margin: 0 auto;
 }
