@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>PicSha: Take pic, Share pic, Like pic</title>
-    <meta name="description" content="Отправляй, принимай и лайкай анонимные фотографии!">
+    <meta name="description" content="Share pic, take pic, like pic - anonymous social network!">
     <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -14,9 +14,11 @@
         ga('send', 'pageview');
 
     </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 </head>
 <body>
 <script type="text/javascript" src="javascripts/jquery-2.0.1.min.js"></script>
+<script type="text/javascript" src="javascripts/maps.js"></script>
 <script type="text/javascript" src="javascripts/photos.js"></script>
 <div id="header">
     <div id="logo">
@@ -25,12 +27,18 @@
 </div>
 <div id="content">
     <div class="buttons">
-        <button onclick="turnon()">Turn on this shit</button>
-        <button onclick="snapshot()">Take Picture</button>
+        <button id="take" onclick="turnon()">Turn on this shit</button>
+        <button id="use" style="display:none" onclick="snapshot()">Use</button>
     </div>
-    <video class="screenshot" autoplay></video>
-    <img class="screenshot" src="">
-    <canvas style="display:none;" width="640" height="480" ></canvas>
+    <div>
+        <div class="screens2">
+            <video class="screenshot" autoplay></video>
+            <div id="pic">
+                <img class="screenshot" src="">
+            </div>
+        </div>
+        <canvas style="display:none;" width="640" height="480" ></canvas>
+    </div>
     <div id="button2">You've got something new!</div>
     <div id="feed"></div>
     <div id="button">Give me more!</div>
