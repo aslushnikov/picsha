@@ -46,4 +46,10 @@ a {
 }
 .screenshot {
 width: 300px;
-}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       }
+}
+#logo {
+    float: left;
+    margin: 0px 0 20px 0px;
+    background: url(../images/logo.png) 207px 127px no-repeat;
+    position: relative;
+}

@@ -4,7 +4,6 @@
     <title>PicSha: Take pic, Share pic, Like pic</title>
     <meta name="description" content="Отправляй, принимай и лайкай анонимные фотографии!">
     <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
-    <script type="text/javascript" src="/camera.js"></script>
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -20,6 +19,9 @@
 <script type="text/javascript" src="javascripts/jquery-2.0.1.min.js"></script>
 <div id="header">
     <p>header</p>
+    <div id="logo">
+
+    </div>
 </div>
 <div id="content">
 
@@ -29,63 +31,12 @@
     <canvas style="display:none;" width="640" height="480" ></canvas>     <br>
     <button onclick="turnon()">Turn on this shit</button>
     <button onclick="snapshot()">Take Picture</button>
-    <script type="text/javascript">
-        var onFailSoHard = function(e) {
-            console.log('Reeeejected!', e);
-        };
-        var video = document.querySelector('video');
-        var canvas = document.querySelector('canvas');
-        var ctx = canvas.getContext('2d');
-        var localMediaStream = null;
-
-        function snapshot() {
-            if (localMediaStream) {
-                ctx.drawImage(video, 0, 0);
-                // "image/webp" works in Chrome 18. In other browsers, this will fall back to image/png.
-                document.querySelector('img').src = canvas.toDataURL('image/webp');
-            }
-        }
-
-        video.addEventListener('click', snapshot, false);
-        function turnon() {
-            // Not showing vendor prefixes or code that works cross-browser.
-            navigator.getUserMedia({video: true}, function(stream) {
-                video.src = window.URL.createObjectURL(stream);
-                localMediaStream = stream;
-            }, onFailSoHard);
-        }
-    </script>
+    <script type="text/javascript" src="/camera.js"></script>
 </div>
 <div id="footer">
     <p>footer</p>
 </div>
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function (d, w, c) {
-        (w[c] = w[c] || []).push(function() {
-            try {
-                w.yaCounter21348973 = new Ya.Metrika({id:21348973,
-                    webvisor:true,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true,
-                    trackHash:true});
-            } catch(e) { }
-        });
+<script type="text/javascript" src="/metrika.js"></script>
 
-        var n = d.getElementsByTagName("script")[0],
-                s = d.createElement("script"),
-                f = function () { n.parentNode.insertBefore(s, n); };
-        s.type = "text/javascript";
-        s.async = true;
-        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
-
-        if (w.opera == "[object Opera]") {
-            d.addEventListener("DOMContentLoaded", f, false);
-        } else { f(); }
-    })(document, window, "yandex_metrika_callbacks");
-</script>
-<noscript><div><img src="//mc.yandex.ru/watch/21348973" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
 </body>
 </html>
