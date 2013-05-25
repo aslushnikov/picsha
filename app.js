@@ -1,3 +1,4 @@
+// vim: softtabstop=2 shiftwidth=2
 /**
  * Module dependencies.
  */
@@ -73,6 +74,20 @@ io.sockets.on('connection', function (socket) {
     });
     activeSockets.push(socket);
 });
+
+
+// Mongo DB
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+  var kittySchema = mongoose.Schema({
+      name: String
+  });
+  var Kitten = mongoose.model('Kitten', kittySchema);
+});
+
 
 // Routing
 app.get("/", function (req, res) {

@@ -9,5 +9,6 @@
     , "uuid": ">= 1.4.1"
     , "cookie": "0.1.0"
     , "connect": "2.7.10"
+    , "mongoose": "3.x"
   }
 }
