@@ -22,22 +22,20 @@ function addPhotoToModel(photo) {
 
 $(document).ready(function(){
     $('#button').click(function(){
-        addPhotoToBottom(0, "http://i500.listal.com/image/3337547/500.jpg", 0, 0);
+        addPhotoToBottom(0, "http://i500.listal.com/image/3337547/480.jpg", 0, 0);
     });
     $('#button2').click(function(){
-        addPhotoToTop(0, "http://i500.listal.com/image/3337547/500.jpg", 0, 0);
+        addPhotoToTop(0, "http://i500.listal.com/image/3337547/480.jpg", 0, 0);
     });
 });
 
 function addPhoto(id, src, lat, lon, position) {
     addPhotoToModel(new Photo(id, src,lat, lon));
     var photo = '<div class="photo" id="'+id+'" style="background:url('+src+');">' +
-//        '<img src="'+src+'" width=500px class="photo_img">' +
         '<div class="actions_bar">' +
         '<img class="like" src="images/heart-no.png"/>' +
         '<img class="geo" src="images/map.png"/>' +
         '</div>' +
-//        '</img>' +
         '</div>';
     if (position === "top") {
         $("#feed").prepend(photo);
@@ -59,10 +57,11 @@ function addPhoto(id, src, lat, lon, position) {
         window.setTimeout(function () {
             return function () {
                 var src = "";
+                var photo = findPhotoById(id);
                 if ($img.get(0)._onMap) {
-                    src = "http://www.straitpinkie.com/wp-content/uploads/2011/12/04Kelly28-500x500.jpg";
+                    src = getMapImageUrl(photo.lat, photo.lon);
                 } else {
-                    src = findPhotoById(id).src;
+                    src = photo.src;
                 }
                 console.log(src);
                 $img.css('background', 'url(' + src + ')');
