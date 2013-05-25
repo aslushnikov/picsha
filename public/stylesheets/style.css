@@ -92,8 +92,8 @@ a {
 }
 
 .photo {
-    width: 500px;
-    height: 500px;
+    width: 480px;
+    height: 480px;
     margin: 0 auto;
     z-index: 2;
     position: relative;
@@ -102,17 +102,18 @@ a {
     -moz-border-radius: 30px;
     -khtml-border-radius: 30px;
     -webkit-border-radius: 30px;
+    margin-bottom: 40px;
 }
 
 .actions_bar {
     background-color: transparent;
     z-index: 3;
     position: absolute;
-    width: 500px;
+    width: 480px;
     height: 50px;
-    top: 444px;
+    top: 424px;
     left: 50%;
-    margin-left: -250px;
+    margin-left: -240px;
     margin-bottom: 6px;
     text-align: right;
 }
@@ -125,8 +126,20 @@ a {
     margin: 0px 2px 0px 2px;
 }
 
+.animated_flip {
+    -webkit-transition: .9s ease-out;
+    -moz-transition: .9s ease-out;
+    -ms-transition: .9s ease-out;
+    -o-transition: .9s ease-out;
+    transition: .9s ease-out;
+    -webkit-transform: rotateY(360deg);
+    -moz-transform: rotateY(360deg);
+    -ms-transform: rotateY(360deg);
+    -o-transform: rotateY(360deg);
+    transform: rotateY(360deg);
+}
 .screenshot {
-    width: 500px;
+    width: 480px;
 }
 
 #logo {
