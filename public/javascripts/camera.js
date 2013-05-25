@@ -49,6 +49,7 @@ function snapshot() {
         img.style.height = video.offsetHeight + "px";
         img.style.left = video.offsetLeft + "px";
         img.style.top = video.offsetTop + "px";
+        ServerBackend.sendPhoto(img.src);
     }
     document.getElementById("pic").style.display = "block";
     document.getElementById("take").onclick = retake;
