@@ -8,20 +8,6 @@ var app = module.exports = express()
   , io = require('socket.io').listen(server, { log: false })
   , uuid = require('uuid');
 
-var activeSockets = [];
-
-io.sockets.on('connection', function (socket) {
-    socket.emit('news', { hello: 'world, hello!' });
-    socket.on('my other event', function (data) {
-        console.log(data);
-    });
-    socket.on('disconnect', function() {
-        var index = activeSockets.indexOf(socket);
-        if (index >= 0) activeSockets.splice(index, 1);
-    });
-    activeSockets.push(socket);
-});
-
 // Configuration
 app.configure(function(){
     app.set('views', __dirname + '/views');
@@ -43,6 +29,28 @@ app.configure('production', function(){
     app.use(express.errorHandler());
 });
 
+// Socket.IO
+var activeSockets = [];
+io.set('transports', [
+            'websocket'
+          , 'flashsocket'
+          , 'htmlfile'
+          , 'xhr-polling'
+          , 'jsonp-polling'
+        ]);
+io.sockets.on('connection', function (socket) {
+    socket.emit('news', { hello: 'world, hello!' });
+    socket.on('my other event', function (data) {
+        console.log(data);
+    });
+    socket.on('disconnect', function() {
+        var index = activeSockets.indexOf(socket);
+        if (index >= 0) activeSockets.splice(index, 1);
+    });
+    activeSockets.push(socket);
+});
+
+// Routing
 app.get("/", function (req, res) {
     res.redirect('/index.html');
 });
