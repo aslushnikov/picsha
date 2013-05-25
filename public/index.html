@@ -25,20 +25,28 @@
     <div id="logo">
         <a href="/" id="logolink"></a>
     </div>
+    <div id="bottomborder"></div>
+    <div id="rts">
+        <div id="recieved">
+            <p style="margin-right: 11px; position: relative; top: 20%;">Received</p>
+        </div>
+        <INPUT id="take" onclick="turnon()" TYPE="image" SRC="./images/takeapic.png" ALT="SUBMIT">
+        <!--<button id="take" onclick="turnon()"><img src="./images/takeapic.png"></button>-->
+        <div id="sent">
+            <p style="margin-left: 11px; position: relative; top: 20%;">Sent</p>
+        </div>
+    </div>
 </div>
 <div id="content">
-    <div class="buttons">
-        <button id="take" onclick="turnon()">Turn on this shit</button>
-        <button id="use" style="display:none" onclick="snapshot()">Use</button>
-    </div>
     <div>
         <div class="screens2">
-            <video class="screenshot" autoplay height="480"></video>
+            <video id="video" class="screenshot" autoplay height="480" style="display: none;"></video>
             <div id="pic">
                 <img class="screenshot" src="">
             </div>
         </div>
-        <canvas style="display:none;" width="480" height="480" ></canvas>
+        <canvas width="480" height="480" style="display: none;"></canvas>
+        <INPUT id="use" onclick="snapshot()" TYPE="image" SRC="./images/photo-icon2.png" ALT="SUBMIT" style="display: none;">
     </div>
     <div id="button2">You've got something new!</div>
     <div id="feed"></div>
