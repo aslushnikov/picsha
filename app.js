@@ -1,12 +1,12 @@
 /**
  * Module dependencies.
  */
-
 var express = require('express')
 
 var app = module.exports = express()
   , server = require('http').createServer(app)
-  , io = require('socket.io').listen(server, { log: false });
+  , io = require('socket.io').listen(server, { log: false })
+  , uuid = require('uuid');
 
 var activeSockets = [];
 
@@ -23,7 +23,6 @@ io.sockets.on('connection', function (socket) {
 });
 
 // Configuration
-
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
