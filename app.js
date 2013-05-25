@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 var express = require('express')
+  , MongoStore = require('connect-mongo')(express);
 
 var app = module.exports = express()
   , server = require('http').createServer(app)
@@ -11,8 +12,9 @@ var app = module.exports = express()
   , connect = require('connect');
 
 var SITE_SECRET = "I have no idea what I'm doing";
+var DB_NAME = "picsha"
 
-var sessionStore = new express.session.MemoryStore();
+var sessionStore = new MongoStore({db: DB_NAME});
 // Configuration
 app.configure(function(){
     app.set('views', __dirname + '/views');
@@ -74,26 +76,6 @@ io.sockets.on('connection', function (socket) {
     activeSockets.push(socket);
 });
 
-
-// Mongo DB
-var mongoose = require('mongoose');
-var photoSchema = mongoose.Schema({
-    id: String,
-    origin: String,
-    longitude: number,
-    latitude: number,
-    received: Date,
-    liked: Boolean
-});
-var Photo = mongoose.model('photo', photoSchema);
-mongoose.connect('mongodb://localhost/test');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback () {
-    console.log("success connect to mongodb");
-});
-
-
 // Routing
 app.get("/", function (req, res) {
     res.redirect('/index.html');
@@ -109,4 +91,23 @@ app.get('/session', function(req, res){
     res.send('viewed ' + n + ' times\n');
 });
 
-server.listen(process.env.PORT || 3000);
+// Mongo DB
+var mongoose = require('mongoose')
+  , photoSchema = mongoose.Schema({
+        id: String,
+        origin: String,
+        longitude: Number,
+        latitude: Number,
+        received: Date,
+        liked: Boolean
+    })
+  , Photo = mongoose.model('photo', photoSchema);
+
+mongoose.connect('mongodb://localhost/' + DB_NAME);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+    console.log("success connect to mongodb");
+    server.listen(process.env.PORT || 3000);
+});
+
