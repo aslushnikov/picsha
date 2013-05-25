@@ -124,3 +124,64 @@ a {
     position: relative;
     margin: 0 auto;
 }
+
+#overlay {
+    display:none;
+    opacity:0.5;
+    background-color:black;
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    z-index: 999;
+}
+
+#popupContainer {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+#popupBox {
+    display:none;
+    position: relative;
+    margin-bottom:4px;
+    margin-left:10px;
+    width:200px;
+    height: 60px;
+    color: #554C3E;
+    border:2px solid #94D4D9;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+    background-color:#554c3e;
+    z-index: 1000;
+
+}
+#popupContent {
+    font-family:Cambria, Helvetica, sans-serif;
+    color: #f2eccd;
+    margin-top:7px;
+    margin-left:7px;
+    margin-right:7px;
+}
+
+
+
+.buttonCancel{
+    float:right;
+    clear:both;
+    cursor:pointer;
+    width:15px;
+    height:15px;
+    border-radius: 4px;
+    background-color: #5CD2D2;
+    border:none;
+    text-align:left;
+    line-height:10px;
+    color:#FFFFFF;
+    font-size:11px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+}
+
