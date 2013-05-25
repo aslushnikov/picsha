@@ -6,10 +6,13 @@ var express = require('express')
 var app = module.exports = express()
   , server = require('http').createServer(app)
   , io = require('socket.io').listen(server, { log: false })
-  , uuid = require('uuid');
+  , uuid = require('uuid')
+  , cookie = require('cookie')
+  , connect = require('connect');
 
 var SITE_SECRET = "I have no idea what I'm doing";
 
+var sessionStore = new express.session.MemoryStore();
 // Configuration
 app.configure(function(){
     app.set('views', __dirname + '/views');
@@ -17,7 +20,7 @@ app.configure(function(){
     app.use(express.compress());
     app.use(express.bodyParser());
     app.use(express.cookieParser());
-    app.use(express.cookieSession({secret:SITE_SECRET}));
+    app.use(express.session({secret: SITE_SECRET, key: 'express.sid', store: sessionStore}));
     app.use(express.methodOverride());
     app.use(app.router);
     app.use(express.static(__dirname + '/public'));
@@ -33,12 +36,32 @@ app.configure('production', function(){
 
 // Socket.IO
 var activeSockets = [];
+
 io.set('transports', [
             'websocket'
           , 'htmlfile'
           , 'xhr-polling'
           , 'jsonp-polling'
         ]);
+
+io.set('authorization', function(data, accept) {
+    if (data.headers.cookie) {
+        var sessionCookie = cookie.parse(data.headers.cookie);
+        var sessionID = connect.utils.parseSignedCookie(sessionCookie['express.sid'], SITE_SECRET);
+        sessionStore.get(sessionID, function(err, session) {
+            if (err || !session) {
+                accept('Error', false);
+            } else {
+                data.session = session;
+                data.sessionID = sessionID;
+                accept(null, true);
+            }
+        });
+    } else {
+        accept('No cookie', false);
+    }
+});
+
 io.sockets.on('connection', function (socket) {
     socket.emit('news', { hello: 'world, hello!' });
     socket.on('my other event', function (data) {
