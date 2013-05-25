@@ -22,22 +22,62 @@ time, mark, audio, video {
     z-index: 10;
     position: fixed;
     width: 100%;
-    height: 102px;
+    height: 152px;
     padding-top: 8px;
     padding-bottom: 0px;
     padding-left: 8px;
     padding-right: 8px;
-    border-bottom: 1px solid #1c5380;
+    border-bottom: 6px;
     border-bottom-color: rgba(4, 40, 71, 0.8);
     margin: 0px;
     background-color: #f2eccd;
     color: #ffffff;
+    border-image: url(../images/line.png) 4;
+}
+#rts {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    margin-top: -17px;
+    display: -webkit-flex;
+}
+.rts2 {
+    margin: 0 auto;
+}
+#bottomborder {
+    border-bottom: 6px;
+    border-image: url(../images/line.png) 4;
+}
+#sent {
+    margin-top: 14px;
+    color: #554c3e;
+    text-align: left;
+    vertical-align: middle;
+    font-size: 20px;
+    width: 542px;
+    height: 44px;
+}
+#recieved {
+    margin-top: 14px;
+    color: #554c3e;
+    text-align: right;
+    vertical-align: middle;
+    font-size: 20px;
+    width: 542px;
+    height: 44px;
+    background: -moz-linear-gradient(left,  rgba(255,255,255,0) 0%, rgba(255,255,255,0.01) 1%, rgba(255,173,106,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(1%,rgba(255,255,255,0.01)), color-stop(100%,rgba(255,173,106,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.01) 1%,rgba(255,173,106,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.01) 1%,rgba(255,173,106,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.01) 1%,rgba(255,173,106,1) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.01) 1%,rgba(255,173,106,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffad6a',GradientType=1 ); /* IE6-9 */
 }
 #footer {
     width: 100%;
 }
 #content {
-    padding-top: 50px;
+    padding-top: 180px;
     width: 100%;
     text-align: center;
     margin: 0 auto;
@@ -48,7 +88,7 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: #554c3e;
 }
 
 .photo {
@@ -90,7 +130,7 @@ a {
 }
 
 #logo {
-    float: left;
+    display: inline-block;
     margin: 5px 0 5px 100px;
     background: url(../images/logo.png) no-repeat;
     position: relative;
@@ -99,6 +139,10 @@ a {
     display: block;
     height: 92px;
     width: 207px;
+}
+#login {
+    margin: 5px 100px 5px 0px;
+    float: right;
 }
 .buttons {
     margin-top: 90px;
