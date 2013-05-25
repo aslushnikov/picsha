@@ -1,4 +1,5 @@
 $(document).ready(function () {
+//    $("#content").append("<img src=\"" + getMapImageUrl(60, 40) + "\"");
     $('div.image').click(function () {
         $(this).children(".map").toggle();
         $(this).children(".picture").toggle();
