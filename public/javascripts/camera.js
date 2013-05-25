@@ -40,7 +40,7 @@ var onFailSoHard = function(e) {
 
 function snapshot() {
     if (localMediaStream) {
-        ctx.drawImage(video, 0, 0);
+        ctx.drawImage(video, -80, 0);
         // "image/webp" works in Chrome 18. In other browsers, this will fall back to image/png.
         var img = document.querySelector('img');
         img.src = canvas.toDataURL('image/webp');
