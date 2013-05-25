@@ -65,9 +65,13 @@ io.set('authorization', function(data, accept) {
 });
 
 io.sockets.on('connection', function (socket) {
-    socket.emit('news', { hello: 'world, hello!' });
-    socket.on('my other event', function (data) {
-        console.log(data);
+    socket.on('photo', function(data) {
+        for(var i = 0; i < activeSockets.length; ++i) {
+            if (activeSockets[i] !== socket) {
+                activeSockets[i].emit("photo", data);
+                break;
+            }
+        }
     });
     socket.on('disconnect', function() {
         var index = activeSockets.indexOf(socket);
@@ -78,7 +82,7 @@ io.sockets.on('connection', function (socket) {
 
 // Routing
 app.get("/", function (req, res) {
-    res.redirect('/index.html');
+    res.redirect('/underconstruction.html');
 });
 
 app.get("/clients", function (req, res) {
@@ -96,6 +100,7 @@ var mongoose = require('mongoose')
   , photoSchema = mongoose.Schema({
         id: String,
         origin: String,
+        routed: String,
         longitude: Number,
         latitude: Number,
         received: Date,
@@ -111,3 +116,7 @@ db.once('open', function callback () {
     server.listen(process.env.PORT || 3000);
 });
 
+// Picture handling
+
+function receivePhoto(photo) {
+}

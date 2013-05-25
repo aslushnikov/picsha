@@ -14,8 +14,9 @@ if (navigator.getUserMedia) {
 } else {
     video.src = 'somevideo.webm'; // fallback.
 }
-    document.getElementById("take").onclick = snapshot;
-    document.getElementById('take').innerHTML = "Take a Picture";
+    document.getElementById("use").style.display = "inline";
+    document.getElementById("video").style.display = "inline";
+
 }
 
 // Not showing vendor prefixes or code that works cross-browser:
@@ -40,7 +41,7 @@ var onFailSoHard = function(e) {
 
 function snapshot() {
     if (localMediaStream) {
-        ctx.drawImage(video, 0, 0);
+        ctx.drawImage(video, -80, 0);
         // "image/webp" works in Chrome 18. In other browsers, this will fall back to image/png.
         var img = document.querySelector('img');
         img.src = canvas.toDataURL('image/webp');
@@ -49,11 +50,11 @@ function snapshot() {
         img.style.height = video.offsetHeight + "px";
         img.style.left = video.offsetLeft + "px";
         img.style.top = video.offsetTop + "px";
+        ServerBackend.sendPhoto(img.src);
     }
-    document.getElementById("pic").style.display = "block";
-    document.getElementById("take").onclick = retake;
-    document.getElementById('take').innerHTML = "Retake";
-    document.getElementById("use").style.display = "inline";
+   document.getElementById("pic").style.display = "block";
+    /*document.getElementById("take").onclick = retake;*/
+    document.getElementById("use").src = "./images/send.png";
 
 }
 function retake() {
