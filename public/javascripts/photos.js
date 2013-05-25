@@ -1,48 +1,52 @@
 $(document).ready(function(){
     $('#button').click(function(){
-        addPhotoToBottom("http://i500.listal.com/image/3337547/500.jpg");
+        addPhotoToBottom(0, "http://i500.listal.com/image/3337547/500.jpg", 0, 0);
     });
     $('#button2').click(function(){
-        addPhotoToTop("http://i500.listal.com/image/3337547/500.jpg");
+        addPhotoToTop(0, "http://i500.listal.com/image/3337547/500.jpg", 0, 0);
     });
 });
 
-function swapImageSrc(imageObj, src1, src2) {
-    var src = (imageObj.attr('src') === src1) ? src2 : src1;
-    imageObj.attr('src', src);
-}
-
-function addPhoto(src, position) {
-    var photo = '<div class="photo">' +
-        '<img src='+src+' width=500px class="photo_img">' +
+function addPhoto(id, src, lat, lon, position) {
+    var photo = '<div class="photo" id="'+id+'" style="background:url('+src+');">' +
+//        '<img src="'+src+'" width=500px class="photo_img">' +
         '<div class="actions_bar">' +
-        '<img class="like" src="http://images.wikia.com/clubpenguin/images/4/44/Like.png" width=20px height=20px/>' +
-        '<img class="geo" src="geo"/>' +
+        '<img class="like" src="images/heart-no.png"/>' +
+        '<img class="geo" src="images/map.png"/>' +
         '</div>' +
-        '</img>' +
+//        '</img>' +
         '</div>';
     if (position === "top") {
         $("#feed").prepend(photo);
     } else if (position === "bottom") {
         $("#feed").append(photo);
     }
+    var photoDiv = $("#"+id); photoDiv._lat = lat; photoDiv._lon = lon;
     $('.like').click(function(){
-        swapImageSrc($(this), "http://images.wikia.com/clubpenguin/images/4/44/Like.png", "http://conecti.ca/wp-content/uploads/2013/04/Facebook-Like.png");
-        //div class photo
-        //$(this).parent().parent();
+        if ($(this).attr('src') === "images/heart-no.png") {
+            $(this).attr('src', "images/heart-yes.png");
+            likePhoto(id);
+        }
     });
     $('.geo').click(function(){
-        swapImageSrc($(this), "geo.jpg", "geo_opened.jpg");
-        //div class photo
-        //$(this).parent().parent();
-
+        //show map will be here
     });
 }
 
-function addPhotoToBottom(src) {
-    addPhoto(src, "bottom");
+function addPhotoToBottom(id, src, lat, lon) {
+    addPhoto(id, src, lon, lat, "bottom");
 }
 
-function addPhotoToTop(src) {
-    addPhoto(src, "top");
+function addPhotoToTop(id, src, lat, lon) {
+    addPhoto(id, src, lon, lat, "top");
+}
+
+//client-server stuff
+
+function photoReceived(id, img, lat, lon) {
+    addPhotoToTop(id, img, lat, lon);
+}
+
+function likePhoto(id) {
+
 }
