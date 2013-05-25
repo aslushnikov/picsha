@@ -140,7 +140,6 @@ function logerr(callback, err, obj) {
 }
 
 function onPhotoReceived(userId, photo) {
-    console.log("Photo received");
     getOrCreateUser(userId, function(err, user) {
         user.waitingFor += 1;
         user.save(findPhotoForUser);
@@ -159,7 +158,7 @@ function onPhotoReceived(userId, photo) {
 
 function assocUserWithPhoto(user, photo) {
     if (!user || !photo) return;
-    photo.received = user.id;
+    photo.receiver = user.id;
     user.waitingFor -= 1;
     photo.save();
     user.save();
