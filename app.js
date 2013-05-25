@@ -3,9 +3,24 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
 
-var app = module.exports = express();
+var app = module.exports = express()
+  , server = require('http').createServer(app)
+  , io = require('socket.io').listen(server, { log: false });
+
+var activeSockets = [];
+
+io.sockets.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world, hello!' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+  socket.on('disconnect', function() {
+    var index = activeSockets.indexOf(socket);
+    if (index >= 0) activeSockets.splice(index, 1);
+  });
+  activeSockets.push(socket);
+});
 
 // Configuration
 
@@ -33,10 +48,14 @@ app.get("/", function (req, res) {
     res.redirect('/index.html');
 });
 
-app.get('/testsession', function(req, res){
+app.get("/clients", function (req, res) {
+  res.send('Active clients: ' + activeSockets.length);
+});
+
+app.get('/session', function(req, res){
   req.session.count = req.session.count || 0;
   var n = req.session.count++;
   res.send('viewed ' + n + ' times\n');
 });
 
-app.listen(process.env.PORT || 3000);
+server.listen(process.env.PORT || 3000);
