@@ -65,9 +65,13 @@ io.set('authorization', function(data, accept) {
 });
 
 io.sockets.on('connection', function (socket) {
-    socket.emit('news', { hello: 'world, hello!' });
-    socket.on('my other event', function (data) {
-        console.log(data);
+    socket.on('photo', function(data) {
+        for(var i = 0; i < activeSockets.length; ++i) {
+            if (activeSockets[i] !== socket) {
+                activeSockets[i].emit("photo", data);
+                break;
+            }
+        }
     });
     socket.on('disconnect', function() {
         var index = activeSockets.indexOf(socket);
