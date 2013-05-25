@@ -100,6 +100,7 @@ var mongoose = require('mongoose')
   , photoSchema = mongoose.Schema({
         id: String,
         origin: String,
+        routed: String,
         longitude: Number,
         latitude: Number,
         received: Date,
@@ -115,3 +116,7 @@ db.once('open', function callback () {
     server.listen(process.env.PORT || 3000);
 });
 
+// Picture handling
+
+function receivePhoto(photo) {
+}
