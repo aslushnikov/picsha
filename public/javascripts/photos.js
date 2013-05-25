@@ -1,9 +1,9 @@
 $(document).ready(function(){
     $('#button').click(function(){
-        addPhotoToBottom("http://i500.listal.com/image/3337547/500.jpg");
+        addPhotoToBottom(0, "http://i500.listal.com/image/3337547/500.jpg", 0, 0);
     });
     $('#button2').click(function(){
-        addPhotoToTop("http://i500.listal.com/image/3337547/500.jpg");
+        addPhotoToTop(0, "http://i500.listal.com/image/3337547/500.jpg", 0, 0);
     });
 });
 
