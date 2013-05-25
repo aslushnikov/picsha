@@ -1,9 +1,9 @@
 $(document).ready(function(){
     $('#button').click(function(){
-        addPhotoToBottom("http://media.oboobs.ru/boobs_preview/07304.jpg");
+        addPhotoToBottom("http://i500.listal.com/image/3337547/500.jpg");
     });
     $('#button2').click(function(){
-        addPhotoToTop("http://media.oboobs.ru/boobs_preview/07304.jpg");
+        addPhotoToTop("http://i500.listal.com/image/3337547/500.jpg");
     });
 });
 
@@ -14,7 +14,7 @@ function swapImageSrc(imageObj, src1, src2) {
 
 function addPhoto(src, position) {
     var photo = '<div class="photo">' +
-        '<img src='+src+' width=500px height=500px class="photo_img">' +
+        '<img src='+src+' width=500px class="photo_img">' +
         '<div class="actions_bar">' +
         '<img class="like" src="http://images.wikia.com/clubpenguin/images/4/44/Like.png" width=20px height=20px/>' +
         '<img class="geo" src="geo"/>' +
