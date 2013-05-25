@@ -27,7 +27,9 @@ app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
 
-// Routes
+app.get("/", function (req, res) {
+    res.redirect('/index.html');
+});
 
 app.get('/', routes.index);
 
