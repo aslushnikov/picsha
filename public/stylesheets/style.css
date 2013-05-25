@@ -37,6 +37,7 @@ time, mark, audio, video {
     text-align: center;
 }
 body {
+  background-color: #f2eccd;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
