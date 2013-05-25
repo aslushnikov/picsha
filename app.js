@@ -29,6 +29,7 @@ app.configure('production', function(){
     app.use(express.errorHandler());
 });
 
+// Socket.IO
 var activeSockets = [];
 io.set('transports', [
             'websocket'
@@ -49,6 +50,7 @@ io.sockets.on('connection', function (socket) {
     activeSockets.push(socket);
 });
 
+// Routing
 app.get("/", function (req, res) {
     res.redirect('/index.html');
 });
