@@ -12,7 +12,13 @@ Server.prototype = {
 
     sendPhoto: function(base64)
     {
-        this._socket.emit("photo", base64);
+        var photo = {
+            id: uuid.v1(),
+            longitude: 0,
+            latitude: 0,
+            base64: base64
+        };
+        this._socket.emit("photo", photo);
     }
 }
 

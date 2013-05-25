@@ -66,12 +66,7 @@ io.set('authorization', function(data, accept) {
 
 io.sockets.on('connection', function (socket) {
     socket.on('photo', function(data) {
-        for(var i = 0; i < activeSockets.length; ++i) {
-            if (activeSockets[i] !== socket) {
-                activeSockets[i].emit("photo", data);
-                break;
-            }
-        }
+        onPhotoReceived(socket.handshake.sessionID, data);
     });
     socket.on('disconnect', function() {
         var index = activeSockets.indexOf(socket);
@@ -97,16 +92,22 @@ app.get('/session', function(req, res){
 
 // Mongo DB
 var mongoose = require('mongoose')
-  , photoSchema = mongoose.Schema({
+var photoSchema = mongoose.Schema({
         id: String,
-        origin: String,
-        routed: String,
+        src: String,
+        sender: String,
+        receiver: String,
         longitude: Number,
         latitude: Number,
-        received: Date,
+        date: Date,
         liked: Boolean
     })
-  , Photo = mongoose.model('photo', photoSchema);
+  , Photo = mongoose.model('photos', photoSchema);
+var userSchema = mongoose.Schema({
+        id: String,
+        waitingFor: Number
+    })
+  , User = mongoose.model('users', userSchema);
 
 mongoose.connect('mongodb://localhost/' + DB_NAME);
 var db = mongoose.connection;
@@ -116,7 +117,68 @@ db.once('open', function callback () {
     server.listen(process.env.PORT || 3000);
 });
 
-// Picture handling
+// Model
+function getOrCreateUser(id, callback) {
+    User.findOne({ id: id}, function(err, user) {
+        if (err || !user) {
+            user = new User({id: id, waitingFor: 0});
+            return user.save(callback);
+        }
+        callback(null, user);
+    });
+}
 
-function receivePhoto(photo) {
+function waitingUsers(callback) {
+    User.find({waitingFor: {"$gt": 0}}, callback);
+}
+
+// Routing logic
+
+function logerr(callback, err, obj) {
+    if (err) console.log(err);
+    if (obj && typeof callback === 'function') callback(obj);
+}
+
+function onPhotoReceived(userId, photo) {
+    console.log("Photo received");
+    getOrCreateUser(userId, function(err, user) {
+        user.waitingFor += 1;
+        user.save(findPhotoForUser);
+    });
+    var photo = new Photo({
+        id: photo.id,
+        src: photo.base64,
+        sender: userId,
+        longitude: photo.longitude,
+        latitude: photo.latitude,
+        date: new Date(),
+        liked: false
+    });
+    photo.save(findUserForPhoto);
+}
+
+function assocUserWithPhoto(user, photo) {
+    if (!user || !photo) return;
+    photo.received = user.id;
+    user.waitingFor -= 1;
+    photo.save();
+    user.save();
+}
+
+function findPhotoForUser(err, user) {
+    if (err) return console.error(err);
+    if (!user) return;
+    Photo.findOne({sender: {$ne: user.id}, received: {$exists: false}}, function(err, photo) {
+        if (err) return console.error(err);
+        assocUserWithPhoto(user, photo);
+    });
+}
+
+function  findUserForPhoto(err, photo) {
+    if (err) return console.error(err);
+    if (!photo) return;
+    User.findOne({id: {$ne: photo.sender}, waitingFor: {$gt: 0}}, function(err, user) {
+        if (err) return console.error(err);
+        assocUserWithPhoto(user, photo);
+    });
 }
