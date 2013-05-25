@@ -84,6 +84,22 @@ app.get("/clients", function (req, res) {
     res.send('Active clients: ' + activeSockets.length);
 });
 
+app.get("/photos", function (req, res) {
+    Photo.find({$or: [{sender: req.sessionID}, {receiver: req.sessionID}]}, function(err, photos) {
+        if (err) throw err;
+        var sentPhotos = []
+          , receivedPhotos = [];
+        for(var i = 0; i < photos.length; ++i) {
+            var photo = photos[i];
+            if (photo.sender === req.sessionID)
+                sentPhotos.push(serverToClientPhoto(photo))
+            else
+                receivedPhotos.push(serverToClientPhoto(photo));
+        }
+        res.json({received: receivedPhotos, sent: sentPhotos});
+    });
+});
+
 app.get('/session', function(req, res){
     req.session.count = req.session.count || 0;
     var n = req.session.count++;
@@ -112,6 +128,17 @@ var userSchema = mongoose.Schema({
 // Mapping between sessionID and userID
 function socketForUserId(userId) {
     return activeSockets[userId];
+}
+
+// Mapping between server.photo and client.photo
+function serverToClientPhoto(photo) {
+    return {
+        id: photo.id,
+        src: photo.src,
+        longitude: photo.longitude,
+        latitude: photo.latitude,
+        date: photo.date
+    };
 }
 
 mongoose.connect('mongodb://localhost/' + DB_NAME);
@@ -169,12 +196,7 @@ function assocUserWithPhoto(user, photo) {
     user.save();
     var socket = socketForUserId(user.id);
     if (socket) {
-        socket.emit("photo", {
-            id: photo.id,
-            src: photo.src,
-            longitude: photo.longitude,
-            latitude: photo.latitude
-        });
+        socket.emit("photo", serverToClientPhoto(photo));
     }
 }
 
