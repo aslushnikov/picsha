@@ -27,6 +27,22 @@ $(document).ready(function(){
     $('#button2').click(function(){
         addPhotoToTop(0, "http://i500.listal.com/image/3337547/480.jpg", 0, 0);
     });
+    function addPhotos(photos) {
+        var sent = photos.sent;
+        var received = photos.received;
+        received.sort(function (a, b) {
+            return new Date(b.date) - new Date(a.date);
+        });
+        for(var i = 0; i < received.length; ++i) {
+            var photo = received[i];
+            addPhoto(photo.id, photo.src, photo.latitude, photo.longitude, "bottom");
+        }
+    }
+    $(document).ready(function() {
+        $.get('/photos')
+            .done(addPhotos);
+    });
+
 });
 
 function addPhoto(id, src, lat, lon, position) {

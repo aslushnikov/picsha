@@ -203,7 +203,7 @@ function assocUserWithPhoto(user, photo) {
 function findPhotoForUser(err, user) {
     if (err) return console.error(err);
     if (!user) return;
-    Photo.findOne({sender: {$ne: user.id}, received: {$exists: false}}, function(err, photo) {
+    Photo.findOne({sender: {$ne: user.id}, receiver: {$exists: false}}, function(err, photo) {
         if (err) return console.error(err);
         assocUserWithPhoto(user, photo);
     });
