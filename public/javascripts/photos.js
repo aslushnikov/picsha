@@ -21,7 +21,7 @@ function addPhoto(id, src, lat, lon, position) {
     } else if (position === "bottom") {
         $("#feed").append(photo);
     }
-    var photoDiv = $("#"+id); photoDiv._lat = lat; photoDiv._lon = lon;
+    var $photoDiv = $("#"+id); $photoDiv._lat = lat; $photoDiv._lon = lon;
     $('.like').click(function(){
         if ($(this).attr('src') === "images/heart-no.png") {
             $(this).attr('src', "images/heart-yes.png");
@@ -30,15 +30,27 @@ function addPhoto(id, src, lat, lon, position) {
     });
     $('.geo').click(function(){
         //show map will be here
+        var $img = $(this).parent().parent();
+        $img.addClass('animated_flip');
+        window.setTimeout(function () {
+            return function () {
+                var src = "http://www.straitpinkie.com/wp-content/uploads/2011/12/04Kelly28-500x500.jpg";
+                $img.css('background', 'url(' + src + ')');
+            };
+        }, 500);
+
+        $img.on('transitionend webkitTransitionEnd MSTransitionEnd oTransitionEnd', function() {
+            $img.removeClass('animated_flip');
+        });
     });
 }
 
 function addPhotoToBottom(id, src, lat, lon) {
-    addPhoto(id, src, lon, lat, "bottom");
+    addPhoto(id, src, lat, lon, "bottom");
 }
 
 function addPhotoToTop(id, src, lat, lon) {
-    addPhoto(id, src, lon, lat, "top");
+    addPhoto(id, src, lat, lon, "top");
 }
 
 //client-server stuff
