@@ -8,6 +8,8 @@ var app = module.exports = express()
   , io = require('socket.io').listen(server, { log: false })
   , uuid = require('uuid');
 
+var SITE_SECRET = "I have no idea what I'm doing";
+
 // Configuration
 app.configure(function(){
     app.set('views', __dirname + '/views');
@@ -15,7 +17,7 @@ app.configure(function(){
     app.use(express.compress());
     app.use(express.bodyParser());
     app.use(express.cookieParser());
-    app.use(express.cookieSession({secret: "secreet"}));
+    app.use(express.cookieSession({secret:SITE_SECRET}));
     app.use(express.methodOverride());
     app.use(app.router);
     app.use(express.static(__dirname + '/public'));
@@ -33,7 +35,6 @@ app.configure('production', function(){
 var activeSockets = [];
 io.set('transports', [
             'websocket'
-          , 'flashsocket'
           , 'htmlfile'
           , 'xhr-polling'
           , 'jsonp-polling'
