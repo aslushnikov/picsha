@@ -110,6 +110,19 @@ app.get("/clients", function (req, res) {
     res.send('Active clients: ' + activeClients);
 });
 
+app.get("/map", function (req, res) {
+    Photo.find({longitude: {$exists: true}}, function(err, photos) {
+        var locations = [];
+        for(var i = 0; i < photos.length; ++i) {
+            locations.push({
+                longitude: photos[i].longitude,
+                latitude: photos[i].latitude
+            });
+        }
+        res.json(locations);
+    });
+});
+
 app.post("/addphoto", function(req, res) {
     onPhotoReceived(req.sessionID, req.body);
     res.send(200);
