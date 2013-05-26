@@ -213,6 +213,7 @@ function onPhotoReceived(userId, photo) {
 }
 
 function onPhotoLike(userId, photoId) {
+    console.log("User " + userId + " TRYING to like photo " + photoId);
     Photo.findOne({id: photoId}, function(err, photo) {
         if (err) return console.error(err);
         if (!photo) return;
