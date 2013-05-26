@@ -59,6 +59,7 @@ function snapshot() {
     }
     $("#snapshot-button").hide();
     $("#use-button").show();
+    $("#cancel-button").show();
 }
 
 function usePhoto() {
@@ -73,5 +74,12 @@ function usePhoto() {
     var src = cropCanvas.toDataURL('image/webp');
     ServerBackend.sendPhoto(src);
     $("#overlay").fadeOut("fast");
+}
+
+function cancelPhoto() {
+    $(canvas).hide();
+    $("#snapshot-button").show();
+    $("#use-button").hide();
+    $("#cancel-button").hide();
 }
 

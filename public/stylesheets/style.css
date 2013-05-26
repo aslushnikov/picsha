@@ -159,14 +159,6 @@ a {
     float: right;
 }
 
-.screens {
-    margin: 0 auto;
-}
-.screens2 {
-    position: relative;
-    margin: 0 auto;
-}
-
 #popupContainer {
     position: fixed;
     bottom: 10px;
@@ -249,9 +241,8 @@ a {
     z-index: -1;
 }
 
-#snapshot-button, #use-button {
-    width: 75px;
-    height: 75px;
+#snapshot-button, #use-button, #cancel-button {
+    height: 50px;
 }
 
 .buttons {
