@@ -105,5 +105,5 @@ function photoReceived(id, img, lat, lon) {
 }
 
 function likePhoto(id) {
-
+    ServerBackend.likePhoto(id);
 }

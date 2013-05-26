@@ -69,6 +69,9 @@ io.sockets.on('connection', function (socket) {
     socket.on('photo', function(data) {
         onPhotoReceived(sessionID, data);
     });
+    socket.on('like', function(photoId) {
+        onPhotoLike(sessionID, photoId);
+    });
     socket.on('disconnect', function() {
         delete activeSockets[sessionID];
     });
@@ -137,7 +140,8 @@ function serverToClientPhoto(photo) {
         src: photo.src,
         longitude: photo.longitude,
         latitude: photo.latitude,
-        date: photo.date
+        date: photo.date,
+        liked: photo.liked
     };
 }
 
@@ -166,10 +170,7 @@ function waitingUsers(callback) {
 
 // Routing logic
 
-function logerr(callback, err, obj) {
-    if (err) console.log(err);
-    if (obj && typeof callback === 'function') callback(obj);
-}
+function logerr(err) { if (err) console.error(err); }
 
 function onPhotoReceived(userId, photo) {
     getOrCreateUser(userId, function(err, user) {
@@ -188,12 +189,25 @@ function onPhotoReceived(userId, photo) {
     photo.save(findUserForPhoto);
 }
 
+function onPhotoLike(userId, photoId) {
+    Photo.findOne({id: photoId}, function(err, photo) {
+        if (err) return console.error(err);
+        if (!photo) return;
+        photo.liked = true;
+        photo.save(logerr);
+        var socket = socketForUserId(photo.sender);
+        if (socket) {
+            socket.emit("like", photo.id);
+        }
+    });
+}
+
 function assocUserWithPhoto(user, photo) {
     if (!user || !photo) return;
     photo.receiver = user.id;
     user.waitingFor -= 1;
-    photo.save();
-    user.save();
+    photo.save(logerr);
+    user.save(logerr);
     var socket = socketForUserId(user.id);
     if (socket) {
         socket.emit("photo", serverToClientPhoto(photo));

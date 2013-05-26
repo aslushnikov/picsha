@@ -1,6 +1,7 @@
 function Server() {
     this._socket = io.connect('/');
     this._socket.on("photo", this._photoReceived.bind(this));
+    this._socket.on("like", this._photoLiked.bind(this));
     getCurrentPosition(function(position) {
        this._position = position;
     }.bind(this), 7000);
@@ -11,6 +12,11 @@ Server.prototype = {
     {
         console.log("Photo received");
         addPhoto(photo.id, photo.src, photo.longitude, photo.latitude, "top");
+    },
+
+    _photoLiked: function(photoId)
+    {
+        showPopup("Your photo has been liked!");
     },
 
     sendPhoto: function(base64)
@@ -25,6 +31,11 @@ Server.prototype = {
         }
         this._socket.emit("photo", photo);
         console.log("send photo");
+    },
+
+    likePhoto: function(id)
+    {
+        this._socket.emit("like", id);
     }
 }
 
