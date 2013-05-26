@@ -45,7 +45,11 @@ $(document).ready(function(){
             return new Date(b.date) - new Date(a.date);
         };
         received.sort(cmp);
-        sentPhotos = sent;
+
+        for (var i = 0; i < sent.length; ++i) {
+            sentPhotos.push({id:sent[i].id, liked:sent[i].liked});
+        }
+
         for(var i = 0; i < received.length; ++i) {
             var photo = received[i];
             addPhotoToBottom(photo.id, photo.src, photo.latitude, photo.longitude, photo.liked);
@@ -119,8 +123,8 @@ function photoReceived(id, img, lat, lon, liked) {
     addPhotoToTop(id, img, lat, lon, liked);
 }
 
-function photoSent(id, img, lat, lon) {
-    sentPhotos.push(new Photo(id, img, lat, lon));
+function photoSent(id) {
+    sentPhotos.push({id:id, liked:false});
     updatePhotoLikeStats();
 }
 

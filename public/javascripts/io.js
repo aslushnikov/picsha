@@ -33,6 +33,7 @@ Server.prototype = {
         $.post('/addphoto', photo, "json")
             .done(function() { console.log("sent photo");})
             .fail(function() { console.log("photo sending failed");});
+        photoSent(photo.id)
         //this._socket.emit("photo", photo);
         //console.log("send photo");
     },
