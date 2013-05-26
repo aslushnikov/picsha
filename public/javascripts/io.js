@@ -39,6 +39,7 @@ Server.prototype = {
     likePhoto: function(id)
     {
         //this._socket.emit("like", id);
+        console.log("I like photo: " + id);
         $.post('/addlike', {photoId: id}, "json")
             .done(function() { console.log("sent like");})
             .fail(function() { console.log("like sending failed");});
