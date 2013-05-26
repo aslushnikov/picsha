@@ -251,7 +251,7 @@ a.aboutlink {
 #contentabout {
     margin: 0 auto;
     padding-top: 180px;
-    width: 600px;
+    width: 500px;
 }
 
 ul {
@@ -271,8 +271,18 @@ ul {
 }
 
 #heart {
+
 }
 
 #likes-amount {
     padding-right: 6px;
+}
+h2 {
+    font-size: 25px;
+    padding-bottom: 5px;
+}
+h3 {
+    font-size: 15px;
+    padding-bottom: 5px;
+    padding-top: 10px;
 }
