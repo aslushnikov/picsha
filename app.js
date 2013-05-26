@@ -212,7 +212,6 @@ function onPhotoReceived(userId, photo) {
         user.save(findPhotoForUser);
     });
     var url = "/picshas/" + uuid.v1() + ".png";
-    console.log(photo.base64.substring(0, 100));
     var prefix = 'base64,';
     var base64 = photo.base64.substring(photo.base64.indexOf(prefix) + prefix.length);
     fs.writeFile('./public' + url, new Buffer(base64, "base64"), function(err) {
