@@ -22,6 +22,11 @@ function addPhotoToModel(photo) {
 }
 
 $(document).ready(function(){
+
+    $("#takeapic").click(function() {
+        showCamera();
+    });
+
     function addPhotos(photos) {
         var sent = photos.sent;
         var received = photos.received;

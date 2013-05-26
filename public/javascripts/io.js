@@ -31,14 +31,17 @@ Server.prototype = {
         }
         $.post('/addphoto', photo, "json")
             .done(function() { console.log("sent photo");})
-            .fail(function() { console.log("sent failed");});
+            .fail(function() { console.log("photo sending failed");});
         //this._socket.emit("photo", photo);
         //console.log("send photo");
     },
 
     likePhoto: function(id)
     {
-        this._socket.emit("like", id);
+        //this._socket.emit("like", id);
+        $.post('/addlike', {photoId: id}, "json")
+            .done(function() { console.log("sent like");})
+            .fail(function() { console.log("like sending failed");});
     }
 }
 

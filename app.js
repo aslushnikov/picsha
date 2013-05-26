@@ -109,6 +109,12 @@ app.post("/addphoto", function(req, res) {
     res.send(200);
 });
 
+app.post("/addlike", function(req, res) {
+    console.log(req.body);
+    onPhotoLike(req.sessionID, req.body.photoId);
+    res.send(200);
+});
+
 app.get("/photos", function (req, res) {
     Photo.find({$or: [{sender: req.sessionID}, {receiver: req.sessionID}]}, function(err, photos) {
         if (err) throw err;
@@ -249,7 +255,7 @@ function findPhotoForUser(err, user) {
     });
 }
 
-function  findUserForPhoto(err, photo) {
+function findUserForPhoto(err, photo) {
     if (err) return console.error(err);
     if (!photo) return;
     User.findOne({id: {$ne: photo.sender}, waitingFor: {$gt: 0}}, function(err, user) {

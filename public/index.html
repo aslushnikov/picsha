@@ -58,47 +58,22 @@
 </div>
 
 <div id="header">
-    <div id="logo">
-        <a href="/" id="logolink"></a>
-    </div>
-    <div id="bottomborder"></div>
-    <div id="rts">
-        <div id="recieved">
-            <p style="margin-right: 11px; position: relative; top: 20%;">Received</p>
-        </div>
-        <INPUT id="take" onclick="showCamera()" TYPE="image" SRC="./images/takeapic.png" ALT="SUBMIT">
-        <!--<button id="take" onclick="turnon()"><img src="./images/takeapic.png"></button>-->
-        <div id="sent">
-            <p style="margin-left: 11px; position: relative; top: 20%;">Sent</p>
-        </div>
-    </div>
+    <img src="images/logo-big.png"/>
+    <div id="takeapic"></div>
+    <div id="logo_name"></div>
 </div>
 <div id="content">
-    <!--<div id="camera">-->
-    <!--<div class="screens">-->
-    <!--<div id="webcam" style="display: none;"></div>-->
-    <!--<img id="image"  style="display: none;" src="">-->
-
-    <!--&lt;!&ndash;<video id="video" class="screenshot" autoplay height="480"></video>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div id="pic">&ndash;&gt;-->
-    <!--&lt;!&ndash;<img class="screenshot" src="">&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--</div>-->
-    <!--&lt;!&ndash;<canvas width="480" height="480" style="display: none;"></canvas>&ndash;&gt;-->
-    <!--<INPUT id="snapshot-button" onclick="snapshot()" TYPE="image" SRC="./images/photo-icon2.png" ALT="SUBMIT">-->
-    <!--<INPUT id="use-button" onclick="usePhoto()" TYPE="image" SRC="./images/send.png" ALT="SUBMIT"-->
-    <!--style="display: none;">-->
-    <!--</div>-->
-    <!--<div id="button2">You've got something new!</div>-->
     <div id="feed"></div>
 </div>
 <div id="footer">
-    <p>footer</p>
+    <div id="aboutus">
+        <a class="aboutlink" href="./about.html">About us</a>
+    </div>
 </div>
-<script type="text/javascript" src="javascripts/jquery-2.0.1.min.js"></script>
-<script type="text/javascript" src="javascripts/maps.js"></script>
-<script type="text/javascript" src="javascripts/photos.js"></script>
-<script type="text/javascript" src="javascripts/popups.js"></script>
+<script type="text/javascript" src="./javascripts/jquery-2.0.1.min.js"></script>
+<script type="text/javascript" src="./javascripts/maps.js"></script>
+<script type="text/javascript" src="./javascripts/photos.js"></script>
+<script type="text/javascript" src="./javascripts/popups.js"></script>
 <script type="text/javascript" src="./javascripts/metrika.js"></script>
 <script type="text/javascript" src="./javascripts/camera.js"></script>
 <script type="text/javascript" src="./socket.io/socket.io.js"></script>
