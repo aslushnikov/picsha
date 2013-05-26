@@ -28,14 +28,17 @@
 <div id="overlay">
     <div class="shadow"></div>
     <div id="camera">
-        <div class="media">
+        <div class="media" style="z-index: 2;position: relative;">
             <video id="video" class="screenshot" autoplay></video>
-            <canvas width="480px" height="360px" style="width:480px; height:360px;display: none;"></canvas>
+            <canvas width="480px" height="360px" style="width:480px; height:360px;display: none;z-index: 2;position: relative;">
+            </canvas>
+            <div class="actions_bar_2">
+                <img id="cancel-button" src="images/close-pic.png" onclick="cancelPhoto()"/>
+            </div>
         </div>
         <div class="buttons">
             <img id="snapshot-button" onclick="snapshot()" src="./images/photo-icon3.png" alt="SUBMIT">
             <img id="use-button" onclick="usePhoto()" src="./images/send3.png" alt="SUBMIT" style="display: none;">
-            <img id="cancel-button" onclick="cancelPhoto()" src="./images/photo-icon3.png" alt="SUBMIT" style="display: none;">
         </div>
     </div>
 </div>
@@ -72,19 +75,19 @@
 </div>
 <div id="content">
     <!--<div id="camera">-->
-        <!--<div class="screens">-->
-            <!--<div id="webcam" style="display: none;"></div>-->
-            <!--<img id="image"  style="display: none;" src="">-->
+    <!--<div class="screens">-->
+    <!--<div id="webcam" style="display: none;"></div>-->
+    <!--<img id="image"  style="display: none;" src="">-->
 
-            <!--&lt;!&ndash;<video id="video" class="screenshot" autoplay height="480"></video>&ndash;&gt;-->
-            <!--&lt;!&ndash;<div id="pic">&ndash;&gt;-->
-                <!--&lt;!&ndash;<img class="screenshot" src="">&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--</div>-->
-        <!--&lt;!&ndash;<canvas width="480" height="480" style="display: none;"></canvas>&ndash;&gt;-->
-        <!--<INPUT id="snapshot-button" onclick="snapshot()" TYPE="image" SRC="./images/photo-icon2.png" ALT="SUBMIT">-->
-        <!--<INPUT id="use-button" onclick="usePhoto()" TYPE="image" SRC="./images/send.png" ALT="SUBMIT"-->
-               <!--style="display: none;">-->
+    <!--&lt;!&ndash;<video id="video" class="screenshot" autoplay height="480"></video>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div id="pic">&ndash;&gt;-->
+    <!--&lt;!&ndash;<img class="screenshot" src="">&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<canvas width="480" height="480" style="display: none;"></canvas>&ndash;&gt;-->
+    <!--<INPUT id="snapshot-button" onclick="snapshot()" TYPE="image" SRC="./images/photo-icon2.png" ALT="SUBMIT">-->
+    <!--<INPUT id="use-button" onclick="usePhoto()" TYPE="image" SRC="./images/send.png" ALT="SUBMIT"-->
+    <!--style="display: none;">-->
     <!--</div>-->
     <!--<div id="button2">You've got something new!</div>-->
     <div id="feed"></div>

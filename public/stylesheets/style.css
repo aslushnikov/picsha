@@ -127,6 +127,23 @@ a {
     margin: 0px 2px 0px 2px;
 }
 
+.actions_bar_2 {
+    background-color: transparent;
+    z-index: 3;
+    position: absolute;
+    width: 480px;
+    height: 50px;
+    top: 310px;
+    left: 50%;
+    margin-left: -240px;
+    margin-bottom: 6px;
+    text-align: right;
+}
+
+#cancel-button {
+    margin: 0px 10px 0px 2px;
+}
+
 .animated_flip {
     -webkit-transition: .9s ease-out;
     -moz-transition: .9s ease-out;
@@ -241,7 +258,7 @@ a {
     z-index: -1;
 }
 
-#snapshot-button, #use-button, #cancel-button {
+#snapshot-button, #use-button {
     height: 50px;
 }
 
