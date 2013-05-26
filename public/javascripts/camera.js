@@ -3,13 +3,6 @@ $(document).ready(function () {
     video = document.querySelector('video');
     canvas = document.querySelector('canvas');
     turnon();
-
-//    $(document).mouseup(function (e) {
-//        var container = $("#overlay");
-//        if (container.has(e.target).length === 0) {
-//            container.hide();
-//        }
-//    });
 });
 
 var localMediaStream = null;
@@ -38,12 +31,6 @@ function showCamera() {
     $("#snapshot-button").show();
     $("#use-button").hide();
     $("#cancel-button").hide();
-//    $(document).click(function () {
-//        var $overlay = $("#overlay");
-//        if (!$overlay.is(":hidden")) {
-//            $overlay.hide();
-//        }
-//    });
 }
 
 // Not showing vendor prefixes or code that works cross-browser:

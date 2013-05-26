@@ -11,7 +11,7 @@ Server.prototype = {
     _photoReceived: function(photo)
     {
         console.log("Photo received");
-        addPhotoToTop(photo.id, photo.src, photo.latitude, photo.longitude, photo.liked);
+        photoReceived(photo.id, photo.src, photo.latitude, photo.longitude, photo.liked);
     },
 
     _photoLiked: function(photoId)

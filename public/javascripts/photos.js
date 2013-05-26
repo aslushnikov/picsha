@@ -61,7 +61,24 @@ $(document).ready(function(){
             .done(addPhotos);
     });
 
+    refreshWaitingCount();
 });
+
+function refreshWaitingCount() {
+    window.setTimeout(function () {
+        return function () {
+            $.get('/waiting').done(function(data) {
+                console.log("refreshWaitingCount = " + data);
+                if (data > 0) {
+                    $("#waiting").show();
+                } else {
+                    $("#waiting").hide();
+                }
+            });
+        };
+    }(), 500);
+
+}
 
 function addPhoto(id, src, lat, lon, liked, position) {
     addPhotoToModel(new Photo(id, src, lat, lon, liked));
@@ -121,11 +138,14 @@ function addPhotoToTop(id, src, lat, lon, liked) {
 
 function photoReceived(id, img, lat, lon, liked) {
     addPhotoToTop(id, img, lat, lon, liked);
+    updatePhotoLikeStats();
+    refreshWaitingCount();
 }
 
 function photoSent(id) {
     sentPhotos.push({id:id, liked:false});
     updatePhotoLikeStats();
+    refreshWaitingCount();
 }
 
 function likePhoto(id) {
