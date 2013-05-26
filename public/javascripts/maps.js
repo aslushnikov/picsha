@@ -11,18 +11,18 @@ function getMapImageUrl(latitude, longitude) {
         latitude + "," + longitude + "&sensor=false"
 }
 
-function getCurrentPosition(callback) {
+function getCurrentPosition(callback, timeout) {
     // Try HTML5 geolocation
-    var latitude = null;
-    var longitude = null;
+    timeout = timeout || 10000;
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
             callback({latitude: latitude, longitude: longitude});
         }, function () {
             callback(null);
-        });
+        },
+        { timeout: timeout});
     } else {
         callback(null);
     }

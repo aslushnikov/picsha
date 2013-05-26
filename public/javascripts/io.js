@@ -1,6 +1,9 @@
 function Server() {
     this._socket = io.connect('/');
     this._socket.on("photo", this._photoReceived.bind(this));
+    getCurrentPosition(function(position) {
+       this._position = position;
+    }.bind(this), 7000);
 }
 
 Server.prototype = {
@@ -14,11 +17,14 @@ Server.prototype = {
     {
         var photo = {
             id: uuid.v1(),
-            longitude: 0,
-            latitude: 0,
             base64: base64
         };
+        if (this._position) {
+            photo.longitude = location.longitude;
+            photo.latitude = location.latitude;
+        }
         this._socket.emit("photo", photo);
+        console.log("send photo");
     }
 }
 
