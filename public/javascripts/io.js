@@ -16,7 +16,7 @@ Server.prototype = {
 
     _photoLiked: function(photoId)
     {
-        showPopup("Your photo has been liked!");
+        showPopup("Your picsha has been liked!");
         myPhotoWasLiked(photoId);
     },
 
