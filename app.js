@@ -87,6 +87,11 @@ app.get("/clients", function (req, res) {
     res.send('Active clients: ' + activeSockets.length);
 });
 
+app.post("/addphoto", function(req, res) {
+    onPhotoReceived(req.sessionID, req.body);
+    res.send(200);
+});
+
 app.get("/photos", function (req, res) {
     Photo.find({$or: [{sender: req.sessionID}, {receiver: req.sessionID}]}, function(err, photos) {
         if (err) throw err;
@@ -110,7 +115,7 @@ app.get('/session', function(req, res){
 });
 
 app.get('/waiting', function(req, res) {
-    getOrCreateUser(req.sessionId, function(err, user) {
+    getOrCreateUser(req.sessionID, function(err, user) {
         if (err) throw err;
         res.json(user.waitingFor);
     });

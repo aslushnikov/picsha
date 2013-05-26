@@ -29,8 +29,11 @@ Server.prototype = {
             photo.longitude = this._position.longitude;
             photo.latitude = this._position.latitude;
         }
-        this._socket.emit("photo", photo);
-        console.log("send photo");
+        $.post('/addphoto', photo, "json")
+            .done(function() { console.log("sent photo");})
+            .fail(function() { console.log("sent failed");});
+        //this._socket.emit("photo", photo);
+        //console.log("send photo");
     },
 
     likePhoto: function(id)
