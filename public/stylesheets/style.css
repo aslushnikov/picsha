@@ -229,3 +229,6 @@ a {
     font-weight:bold;
 }
 
+#camera {
+    display: none;
+}

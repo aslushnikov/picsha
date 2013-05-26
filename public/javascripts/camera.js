@@ -9,6 +9,7 @@ $(document).ready(function() {
         navigator.getUserMedia({video: true}, success, fallback);
     }
     video.addEventListener('click', snapshot, false);
+    turnon();
 });
 
 var localMediaStream = null;
@@ -24,8 +25,10 @@ function turnon() {
     } else {
         video.src = 'somevideo.webm'; // fallback.
     }
-    document.getElementById("use").style.display = "inline";
-    document.getElementById("video").style.display = "inline";
+}
+
+function showCamera() {
+    $("#camera").show();
 }
 
 // Not showing vendor prefixes or code that works cross-browser:
@@ -53,11 +56,20 @@ function snapshot() {
         img.style.height = video.offsetHeight + "px";
         img.style.left = video.offsetLeft + "px";
         img.style.top = video.offsetTop + "px";
-        ServerBackend.sendPhoto(img.src);
+        $(img).show();
     }
-    document.getElementById("pic").style.display = "block";
     /*document.getElementById("take").onclick = retake;*/
-    document.getElementById("use").src = "./images/send.png";
+    $("#snapshot-button").hide();
+    $("#use-button").show();
+}
+
+function usePhoto() {
+    var img = document.querySelector('img');
+    ServerBackend.sendPhoto(img.src);
+    $("#camera").hide();
+    $(img).hide();
+    $("#snapshot-button").show();
+    $("#use-button").hide();
 }
 
 function retake() {

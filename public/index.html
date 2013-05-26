@@ -17,11 +17,6 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 </head>
 <body>
-<script type="text/javascript" src="javascripts/jquery-2.0.1.min.js"></script>
-<script type="text/javascript" src="javascripts/maps.js"></script>
-<script type="text/javascript" src="javascripts/photos.js"></script>
-<script type="text/javascript" src="javascripts/camera.js"></script>
-<script type="text/javascript" src="javascripts/popups.js"></script>
 
 <div id="popupContainer">
 </div>
@@ -45,7 +40,7 @@
         <div id="recieved">
             <p style="margin-right: 11px; position: relative; top: 20%;">Received</p>
         </div>
-        <INPUT id="take" onclick="turnon()" TYPE="image" SRC="./images/takeapic.png" ALT="SUBMIT">
+        <INPUT id="take" onclick="showCamera()" TYPE="image" SRC="./images/takeapic.png" ALT="SUBMIT">
         <!--<button id="take" onclick="turnon()"><img src="./images/takeapic.png"></button>-->
         <div id="sent">
             <p style="margin-left: 11px; position: relative; top: 20%;">Sent</p>
@@ -53,15 +48,16 @@
     </div>
 </div>
 <div id="content">
-    <div>
+    <div id="camera">
         <div class="screens2">
-            <video id="video" class="screenshot" autoplay height="480" style="display: none;"></video>
+            <video id="video" class="screenshot" autoplay height="480" ></video>
             <div id="pic">
                 <img class="screenshot" src="">
             </div>
         </div>
         <canvas width="480" height="480" style="display: none;"></canvas>
-        <INPUT id="use" onclick="snapshot()" TYPE="image" SRC="./images/photo-icon2.png" ALT="SUBMIT" style="display: none;">
+        <INPUT id="snapshot-button" onclick="snapshot()" TYPE="image" SRC="./images/photo-icon2.png" ALT="SUBMIT">
+        <INPUT id="use-button" onclick="usePhoto()" TYPE="image" SRC="./images/send.png" ALT="SUBMIT" style="display: none;">
     </div>
     <div id="button2">You've got something new!</div>
     <div id="feed"></div>
@@ -70,6 +66,10 @@
 <div id="footer">
     <p>footer</p>
 </div>
+<script type="text/javascript" src="javascripts/jquery-2.0.1.min.js"></script>
+<script type="text/javascript" src="javascripts/maps.js"></script>
+<script type="text/javascript" src="javascripts/photos.js"></script>
+<script type="text/javascript" src="javascripts/popups.js"></script>
 <script type="text/javascript" src="./javascripts/metrika.js"></script>
 <script type="text/javascript" src="./javascripts/camera.js"></script>
 <script type="text/javascript" src="./socket.io/socket.io.js"></script>
