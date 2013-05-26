@@ -20,8 +20,8 @@ Server.prototype = {
             base64: base64
         };
         if (this._position) {
-            photo.longitude = location.longitude;
-            photo.latitude = location.latitude;
+            photo.longitude = this._position.longitude;
+            photo.latitude = this._position.latitude;
         }
         this._socket.emit("photo", photo);
         console.log("send photo");
