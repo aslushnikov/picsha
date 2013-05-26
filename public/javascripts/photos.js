@@ -21,12 +21,6 @@ function addPhotoToModel(photo) {
 }
 
 $(document).ready(function(){
-    $('#button').click(function(){
-        addPhotoToBottom(0, "http://i500.listal.com/image/3337547/480.jpg", 0, 0);
-    });
-    $('#button2').click(function(){
-        addPhotoToTop(0, "http://i500.listal.com/image/3337547/480.jpg", 0, 0);
-    });
     function addPhotos(photos) {
         var sent = photos.sent;
         var received = photos.received;
