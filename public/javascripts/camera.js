@@ -31,6 +31,11 @@ function showCamera() {
     $("#snapshot-button").show();
     $("#use-button").hide();
     $("#cancel-button").hide();
+    var shadow = $overlay.find(".shadow").get(0);
+    $overlay.click(function(e) {
+        if (e.target === shadow)
+            $(this).fadeOut("fast");
+    });
 }
 
 // Not showing vendor prefixes or code that works cross-browser:
