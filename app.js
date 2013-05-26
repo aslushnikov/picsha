@@ -103,7 +103,7 @@ io.sockets.on('connection', function (socket) {
 
 // Routing
 app.get("/", function (req, res) {
-    res.redirect('/underconstruction.html');
+    res.redirect('/index.html');
 });
 
 app.get("/clients", function (req, res) {
