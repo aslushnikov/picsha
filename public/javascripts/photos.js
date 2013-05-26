@@ -1,10 +1,11 @@
 var photos = [];
 
-function Photo(id, src, lat, lon) {
+function Photo(id, src, lat, lon, liked) {
     this.id = id;
     this.src = src;
     this.lat = lat;
     this.lon = lon;
+    this.liked = liked;
 }
 
 function findPhotoById(id) {
@@ -39,11 +40,11 @@ $(document).ready(function(){
 
 });
 
-function addPhoto(id, src, lat, lon, position) {
-    addPhotoToModel(new Photo(id, src,lat, lon));
+function addPhoto(id, src, lat, lon, liked, position) {
+    addPhotoToModel(new Photo(id, src, lat, lon, liked));
     var photo = '<div class="photo" id="'+id+'" style="background:url('+src+');">' +
         '<div class="actions_bar">' +
-        '<img class="like" src="images/heart-no.png"/>' +
+        '<img class="like" src="' + liked ? "images/heart-yes.png" : "images/heart-no.png" + '"/>' +
         '<img class="geo" src="images/map.png"/>' +
         '</div>' +
         '</div>';
@@ -66,9 +67,7 @@ function addPhoto(id, src, lat, lon, position) {
     $geo.click(function(){
         var $img = $(this).parent().parent();
         $img.addClass('animated_flip');
-        console.log("onMap" + $img.get(0)._onMap);
         $img.get(0)._onMap = !$img.get(0)._onMap;
-        console.log("onMap" + $img.get(0)._onMap);
         window.setTimeout(function () {
             return function () {
                 var src = "";
@@ -89,20 +88,21 @@ function addPhoto(id, src, lat, lon, position) {
     });
 }
 
-function addPhotoToBottom(id, src, lat, lon) {
-    addPhoto(id, src, lat, lon, "bottom");
+function addPhotoToBottom(id, src, lat, lon, liked) {
+    addPhoto(id, src, lat, lon, liked, "bottom");
 }
 
-function addPhotoToTop(id, src, lat, lon) {
-    addPhoto(id, src, lat, lon, "top");
+function addPhotoToTop(id, src, lat, lon, liked) {
+    addPhoto(id, src, lat, lon, liked, "top");
 }
 
 //client-server stuff
 
-function photoReceived(id, img, lat, lon) {
-    addPhotoToTop(id, img, lat, lon);
+function photoReceived(id, img, lat, lon, liked) {
+    addPhotoToTop(id, img, lat, lon, liked);
 }
 
 function likePhoto(id) {
     ServerBackend.likePhoto(id);
+    findPhotoById(id).liked = true;
 }
