@@ -4,12 +4,12 @@ $(document).ready(function () {
     canvas = document.querySelector('canvas');
     turnon();
 
-    $(document).mouseup(function (e) {
-        var container = $("#overlay");
-        if (container.has(e.target).length === 0) {
-            container.hide();
-        }
-    });
+//    $(document).mouseup(function (e) {
+//        var container = $("#overlay");
+//        if (container.has(e.target).length === 0) {
+//            container.hide();
+//        }
+//    });
 });
 
 var localMediaStream = null;
