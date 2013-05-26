@@ -8,6 +8,7 @@ var app = module.exports = express()
   , server = require('http').createServer(app)
   , io = require('socket.io').listen(server, { log: false })
   , uuid = require('uuid')
+  , fs = require('fs')
   , cookie = require('cookie')
   , connect = require('connect');
 
@@ -38,9 +39,12 @@ app.configure('production', function(){
 
 // Socket.IO
 var activeSockets = {};
+var activeClients = 0;
 function addSocket(sid, socket) {
-    if (!activeSockets[sid])
+    if (!activeSockets[sid]) {
         activeSockets[sid] = [];
+        ++activeClients;
+    }
     activeSockets[sid].push(socket);
 }
 
@@ -52,8 +56,10 @@ function removeSocket(sid, socket) {
     if (idx >= 0) {
         sockets.splice(idx, 1);
     }
-    if (!sockets.length)
+    if (!sockets.length) {
+        --activeClients;
         delete activeSockets[sid];
+    }
 }
 
 io.set('transports', [
@@ -101,7 +107,7 @@ app.get("/", function (req, res) {
 });
 
 app.get("/clients", function (req, res) {
-    res.send('Active clients: ' + activeSockets.length);
+    res.send('Active clients: ' + activeClients);
 });
 
 app.post("/addphoto", function(req, res) {
@@ -205,16 +211,23 @@ function onPhotoReceived(userId, photo) {
         user.waitingFor += 1;
         user.save(findPhotoForUser);
     });
-    var photo = new Photo({
-        id: photo.id,
-        src: photo.base64,
-        sender: userId,
-        longitude: photo.longitude,
-        latitude: photo.latitude,
-        date: new Date(),
-        liked: false
+    var url = "/picshas/" + uuid.v1() + ".png";
+    console.log(photo.base64.substring(0, 100));
+    var prefix = 'base64,';
+    var base64 = photo.base64.substring(photo.base64.indexOf(prefix) + prefix.length);
+    fs.writeFile('./public' + url, new Buffer(base64, "base64"), function(err) {
+        if (err) return console.error(err);
+        var mphoto = new Photo({
+            id: photo.id,
+            src: url,
+            sender: userId,
+            longitude: photo.longitude,
+            latitude: photo.latitude,
+            date: new Date(),
+            liked: false
+        });
+        mphoto.save(findUserForPhoto);
     });
-    photo.save(findUserForPhoto);
 }
 
 function onPhotoLike(userId, photoId) {
