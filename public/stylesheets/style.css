@@ -279,5 +279,9 @@ ul {
 
 #waiting {
     /*height: 25px;*/
-    margin-bottom: 10px;
+    display: none;
+    position: absolute;
+    left: 52px;
+    top: 220px;
+    margin-top: 30px;
 }
