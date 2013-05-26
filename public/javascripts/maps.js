@@ -1,5 +1,7 @@
 $(document).ready(function () {
-//    $("#content").append("<img src=\"" + getMapImageUrl(60, 40) + "\"");
+//    getCurrentPosition(function(coords) {
+//        $("#header").append("<img src=\"" + getMapImageUrl(coords.latitude, coords.longitude) + "\">");
+//    });
     $('div.image').click(function () {
         $(this).children(".map").toggle();
         $(this).children(".picture").toggle();
@@ -7,7 +9,11 @@ $(document).ready(function () {
 });
 
 function getMapImageUrl(latitude, longitude) {
-    return "http://maps.googleapis.com/maps/api/staticmap?zoom=4&size=480x480&markers=color:blue%7C" +
+    if (latitude < longitude) {
+        return "http://maps.googleapis.com/maps/api/staticmap?zoom=10&size=480x480&markers=color:blue%7C" +
+            longitude + "," + latitude + "&sensor=false"
+    }
+    return "http://maps.googleapis.com/maps/api/staticmap?zoom=10&size=480x480&markers=color:blue%7C" +
         latitude + "," + longitude + "&sensor=false"
 }
 
