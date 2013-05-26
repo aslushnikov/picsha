@@ -21,12 +21,6 @@ function addPhotoToModel(photo) {
 }
 
 $(document).ready(function(){
-    $('#button').click(function(){
-        addPhotoToBottom(0, "http://i500.listal.com/image/3337547/480.jpg", 0, 0);
-    });
-    $('#button2').click(function(){
-        addPhotoToTop(0, "http://i500.listal.com/image/3337547/480.jpg", 0, 0);
-    });
     function addPhotos(photos) {
         var sent = photos.sent;
         var received = photos.received;
@@ -59,17 +53,22 @@ function addPhoto(id, src, lat, lon, position) {
         $("#feed").append(photo);
     }
     var $photoDiv = $("#"+id); $photoDiv.get(0)._lat = lat; $photoDiv.get(0)._lon = lon;
-    $('.like').click(function(){
+    var $like = $('.like');
+    $like.unbind('click');
+    $like.click(function(){
         if ($(this).attr('src') === "images/heart-no.png") {
             $(this).attr('src', "images/heart-yes.png");
             likePhoto(id);
         }
     });
-    $('.geo').click(function(){
-        //show map will be here
+    var $geo = $('.geo');
+    $geo.unbind('click');
+    $geo.click(function(){
         var $img = $(this).parent().parent();
         $img.addClass('animated_flip');
+        console.log("onMap" + $img.get(0)._onMap);
         $img.get(0)._onMap = !$img.get(0)._onMap;
+        console.log("onMap" + $img.get(0)._onMap);
         window.setTimeout(function () {
             return function () {
                 var src = "";

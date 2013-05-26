@@ -2,13 +2,6 @@ var video, canvas, ctx;
 $(document).ready(function() {
     video = document.querySelector('video');
     canvas = document.querySelector('canvas');
-    ctx = canvas.getContext('2d');
-    if (!navigator.getUserMedia) {
-        fallback();
-    } else {
-        navigator.getUserMedia({video: true}, success, fallback);
-    }
-    video.addEventListener('click', snapshot, false);
     turnon();
 });
 
@@ -28,7 +21,15 @@ function turnon() {
 }
 
 function showCamera() {
-    $("#camera").show();
+    var $cam = $("#camera");
+    var $overlay = $("#overlay");
+    $overlay.fadeIn("fast");
+    canvas.width = video.offsetWidth;
+    canvas.height = video.offsetHeight;
+    ctx = canvas.getContext('2d');
+    $(canvas).hide();
+    $("#snapshot-button").show();
+    $("#use-button").hide();
 }
 
 // Not showing vendor prefixes or code that works cross-browser:
@@ -44,37 +45,33 @@ var onFailSoHard = function(e) {
     console.log('Reeeejected!', e);
 };
 
-
 function snapshot() {
     if (localMediaStream) {
-        ctx.drawImage(video, -80, 0);
-        // "image/webp" works in Chrome 18. In other browsers, this will fall back to image/png.
-        var img = document.querySelector('img');
-        img.src = canvas.toDataURL('image/webp');
-        img.style.position = "absolute";
-        img.style.width = video.offsetWidth + "px";
-        img.style.height = video.offsetHeight + "px";
-        img.style.left = video.offsetLeft + "px";
-        img.style.top = video.offsetTop + "px";
-        $(img).show();
+        var img = $("#camera img").get(0);
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        canvas.src = canvas.toDataURL("image/webp");
+        canvas.style.position = "absolute";
+        canvas.style.width = video.offsetWidth + "px";
+        canvas.style.height = video.offsetHeight + "px";
+        canvas.style.left = video.offsetLeft + "px";
+        canvas.style.top = video.offsetTop + "px";
+        $(canvas).show();
     }
-    /*document.getElementById("take").onclick = retake;*/
     $("#snapshot-button").hide();
     $("#use-button").show();
 }
 
 function usePhoto() {
-    var img = document.querySelector('img');
-    ServerBackend.sendPhoto(img.src);
-    $("#camera").hide();
-    $(img).hide();
-    $("#snapshot-button").show();
-    $("#use-button").hide();
-}
-
-function retake() {
-    document.getElementById("pic").style.display = "none";
-    document.getElementById("take").onclick = snapshot;
-    document.getElementById('take').innerHTML = "Take a Picture";
+    // crop image to make in rectangular
+    var cropCanvas = document.createElement("canvas");
+    var size = Math.min(canvas.width, canvas.height);
+    cropCanvas.width = size;
+    cropCanvas.height = size;
+    var ctx = cropCanvas.getContext("2d");
+    ctx.drawImage(video, (size - canvas.width)/2, (size - canvas.height)/2, canvas.width, canvas.height);
+    // "image/webp" works in Chrome 18. In other browsers, this will fall back to image/png.
+    var src = cropCanvas.toDataURL('image/webp');
+    ServerBackend.sendPhoto(src);
+    $("#overlay").fadeOut("fast");
 }
 

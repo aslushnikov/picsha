@@ -18,6 +18,20 @@
 </head>
 <body>
 
+<div id="overlay">
+    <div class="shadow"></div>
+    <div id="camera">
+        <div class="media">
+            <video id="video" class="screenshot" autoplay></video>
+            <canvas width="480px" height="360px" style="width:480px; height:360px;display: none;"></canvas>
+        </div>
+        <div class="buttons">
+            <img id="snapshot-button" onclick="snapshot()" TYPE="image" SRC="./images/photo-icon2.png" ALT="SUBMIT">
+            <img id="use-button" onclick="usePhoto()" TYPE="image" SRC="./images/send.png" ALT="SUBMIT" style="display: none;">
+        </div>
+    </div>
+</div>
+
 <div id="popupContainer">
 </div>
 
@@ -29,7 +43,6 @@
         <br />
     </div>
 </div>
-<div id="overlay"></div>
 
 <div id="header">
     <div id="logo">
@@ -48,20 +61,7 @@
     </div>
 </div>
 <div id="content">
-    <div id="camera">
-        <div class="screens2">
-            <video id="video" class="screenshot" autoplay height="480" ></video>
-            <div id="pic">
-                <img class="screenshot" src="">
-            </div>
-        </div>
-        <canvas width="480" height="480" style="display: none;"></canvas>
-        <INPUT id="snapshot-button" onclick="snapshot()" TYPE="image" SRC="./images/photo-icon2.png" ALT="SUBMIT">
-        <INPUT id="use-button" onclick="usePhoto()" TYPE="image" SRC="./images/send.png" ALT="SUBMIT" style="display: none;">
-    </div>
-    <div id="button2">You've got something new!</div>
     <div id="feed"></div>
-    <div id="button">Give me more!</div>
 </div>
 <div id="footer">
     <p>footer</p>
