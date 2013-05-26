@@ -263,10 +263,10 @@ ul {
     color: rgb(78, 71, 71);
     font-family: "cambrial";
     font-size: 20pt;
-    position: fixed;
+    position: absolute;
     width: 100px;
     height: 100px;
-    left: 220px;
+    left: 50px;
     top: 200px;
 }
 
