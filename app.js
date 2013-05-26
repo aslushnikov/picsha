@@ -126,9 +126,7 @@ app.get("/photos", function (req, res) {
 });
 
 app.get('/session', function(req, res){
-    req.session.count = req.session.count || 0;
-    var n = req.session.count++;
-    res.send('viewed ' + n + ' times\n');
+    res.send(req.sessionID);
 });
 
 app.get('/waiting', function(req, res) {
@@ -224,6 +222,7 @@ function onPhotoLike(userId, photoId) {
         for(var i = 0; i < sockets.length; ++i) {
             sockets[i].emit("like", photo.id);
         }
+        console.log("User " + user.id + " liked photo of user " + photo.sender);
     });
 }
 
@@ -237,6 +236,7 @@ function assocUserWithPhoto(user, photo) {
     for(var i = 0; i < sockets.length; ++i) {
         sockets[i].emit("photo", serverToClientPhoto(photo));
     }
+    console.log("Sent photo " + photo.id + " to user " + user.id);
 }
 
 function findPhotoForUser(err, user) {
