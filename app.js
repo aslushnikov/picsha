@@ -109,6 +109,13 @@ app.get('/session', function(req, res){
     res.send('viewed ' + n + ' times\n');
 });
 
+app.get('/waiting', function(req, res) {
+    getOrCreateUser(req.sessionId, function(err, user) {
+        if (err) throw err;
+        res.json(user.waitingFor);
+    });
+});
+
 // Mongo DB
 var mongoose = require('mongoose')
 var photoSchema = mongoose.Schema({
@@ -162,10 +169,6 @@ function getOrCreateUser(id, callback) {
         }
         callback(null, user);
     });
-}
-
-function waitingUsers(callback) {
-    User.find({waitingFor: {"$gt": 0}}, callback);
 }
 
 // Routing logic
