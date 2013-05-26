@@ -17,6 +17,7 @@ Server.prototype = {
     _photoLiked: function(photoId)
     {
         showPopup("Your photo has been liked!");
+        myPhotoWasLiked(photoId);
     },
 
     sendPhoto: function(base64)

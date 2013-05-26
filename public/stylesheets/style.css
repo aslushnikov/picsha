@@ -257,3 +257,22 @@ a.aboutlink {
 ul {
     margin-left: 30px;
 }
+
+#likeStats {
+    display: none;
+    color: rgb(78, 71, 71);
+    font-family: "cambrial";
+    font-size: 20pt;
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    left: 220px;
+    top: 200px;
+}
+
+#heart {
+}
+
+#likes-amount {
+    padding-right: 6px;
+}

@@ -1,4 +1,5 @@
 var photos = [];
+var sentPhotos = [];
 
 function Photo(id, src, lat, lon, liked) {
     this.id = id;
@@ -21,6 +22,16 @@ function addPhotoToModel(photo) {
     photos.push(photo);
 }
 
+function updatePhotoLikeStats() {
+    var amount = 0;
+    for(var i = 0; i < sentPhotos.length; ++i) {
+        amount += sentPhotos[i].liked ? 1 : 0;
+    }
+    $("#likes-amount").text(amount);
+    $("#photos-sent").text(sentPhotos.length);
+    $("#likeStats").show();
+}
+
 $(document).ready(function(){
 
     $("#takeapic").click(function() {
@@ -30,13 +41,16 @@ $(document).ready(function(){
     function addPhotos(photos) {
         var sent = photos.sent;
         var received = photos.received;
-        received.sort(function (a, b) {
+        var cmp = function(a, b) {
             return new Date(b.date) - new Date(a.date);
-        });
+        };
+        received.sort(cmp);
+        sentPhotos = sent;
         for(var i = 0; i < received.length; ++i) {
             var photo = received[i];
             addPhotoToBottom(photo.id, photo.src, photo.latitude, photo.longitude, photo.liked);
         }
+        updatePhotoLikeStats();
     }
     $(document).ready(function() {
         $.get('/photos')
@@ -105,7 +119,22 @@ function photoReceived(id, img, lat, lon, liked) {
     addPhotoToTop(id, img, lat, lon, liked);
 }
 
+function photoSent(id, img, lat, lon) {
+    sentPhotos.push(new Photo(id, img, lat, lon));
+    updatePhotoLikeStats();
+}
+
 function likePhoto(id) {
     ServerBackend.likePhoto(id);
     findPhotoById(id).liked = true;
+}
+
+function myPhotoWasLiked(photoId) {
+    for(var i = 0; i < sentPhotos.length; ++i) {
+        if (sentPhotos[i].id === photoId) {
+            sentPhotos[i].liked = true;
+            break;
+        }
+    }
+    updatePhotoLikeStats();
 }
