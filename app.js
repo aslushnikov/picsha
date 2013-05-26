@@ -38,6 +38,23 @@ app.configure('production', function(){
 
 // Socket.IO
 var activeSockets = {};
+function addSocket(sid, socket) {
+    if (!activeSockets[sid])
+        activeSockets[sid] = [];
+    activeSockets[sid].push(socket);
+}
+
+function removeSocket(sid, socket) {
+    var sockets = activeSockets[sid];
+    if (!sockets)
+        return console.warn("Hmm.. trying to remove socket, but it's already removed");
+    var idx = sockets.indexOf(socket);
+    if (idx >= 0) {
+        sockets.splice(idx, 1);
+    }
+    if (!sockets.length)
+        delete activeSockets[sid];
+}
 
 io.set('transports', [
             'websocket'
@@ -73,9 +90,9 @@ io.sockets.on('connection', function (socket) {
         onPhotoLike(sessionID, photoId);
     });
     socket.on('disconnect', function() {
-        delete activeSockets[sessionID];
+        removeSocket(sessionID, socket);
     });
-    activeSockets[sessionID] = socket;
+    addSocket(sessionID, socket);
 });
 
 // Routing
@@ -141,8 +158,8 @@ var userSchema = mongoose.Schema({
   , User = mongoose.model('users', userSchema);
 
 // Mapping between sessionID and userID
-function socketForUserId(userId) {
-    return activeSockets[userId];
+function socketsForUserId(userId) {
+    return activeSockets[userId] || [];
 }
 
 // Mapping between server.photo and client.photo
@@ -203,9 +220,9 @@ function onPhotoLike(userId, photoId) {
         if (!photo) return;
         photo.liked = true;
         photo.save(logerr);
-        var socket = socketForUserId(photo.sender);
-        if (socket) {
-            socket.emit("like", photo.id);
+        var sockets = socketsForUserId(photo.sender);
+        for(var i = 0; i < sockets.length; ++i) {
+            sockets[i].emit("like", photo.id);
         }
     });
 }
@@ -216,9 +233,9 @@ function assocUserWithPhoto(user, photo) {
     user.waitingFor -= 1;
     photo.save(logerr);
     user.save(logerr);
-    var socket = socketForUserId(user.id);
-    if (socket) {
-        socket.emit("photo", serverToClientPhoto(photo));
+    var sockets = socketsForUserId(user.id);
+    for(var i = 0; i < sockets.length; ++i) {
+        sockets[i].emit("photo", serverToClientPhoto(photo));
     }
 }
 
