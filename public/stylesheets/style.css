@@ -32,8 +32,8 @@ time, mark, audio, video {
 
 #takeapic {
     position: absolute;
-    margin-left: 702px;
-    margin-top: -3px;
+    left: 702px;
+    top: 14px;
     width: 195px;
     height: 76px;
     background: url("../images/takeapic2.png");
@@ -43,8 +43,8 @@ time, mark, audio, video {
     position: absolute;
     width: 127px;
     height: 42px;
-    margin-top: 70px;
-    margin-left: 50px;
+    top: 91px;
+    left: 50px;
     background: url("../images/picsha.png");
 }
 
