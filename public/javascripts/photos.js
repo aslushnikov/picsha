@@ -59,16 +59,14 @@ function addPhoto(id, src, lat, lon, liked, position) {
         $("#feed").append(photo);
     }
     var $photoDiv = $("#"+id); $photoDiv.get(0)._lat = lat; $photoDiv.get(0)._lon = lon;
-    var $like = $('.like');
-    $like.unbind('click');
+    var $like = $photoDiv.find('.like');
     $like.click(function(){
         if ($(this).attr('src') === "images/heart-no.png") {
             $(this).attr('src', "images/heart-yes.png");
             likePhoto(id);
         }
     });
-    var $geo = $('.geo');
-    $geo.unbind('click');
+    var $geo = $photoDiv.find('.geo');
     $geo.click(function(){
         var $img = $(this).parent().parent();
         $img.addClass('animated_flip');

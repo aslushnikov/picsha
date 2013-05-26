@@ -110,7 +110,6 @@ app.post("/addphoto", function(req, res) {
 });
 
 app.post("/addlike", function(req, res) {
-    console.log(req.body);
     onPhotoLike(req.sessionID, req.body.photoId);
     res.send(200);
 });
@@ -219,7 +218,6 @@ function onPhotoReceived(userId, photo) {
 }
 
 function onPhotoLike(userId, photoId) {
-    console.log("User " + userId + " TRYING to like photo " + photoId);
     Photo.findOne({id: photoId}, function(err, photo) {
         if (err) return console.error(err);
         if (!photo) return;
