@@ -1,17 +1,24 @@
-var video, canvas, ctx;
-$(document).ready(function() {
+var video, canvas, ctx, cropCanvas;
+$(document).ready(function () {
     video = document.querySelector('video');
     canvas = document.querySelector('canvas');
     turnon();
+
+    $(document).mouseup(function (e) {
+        var container = $("#overlay");
+        if (container.has(e.target).length === 0) {
+            container.hide();
+        }
+    });
 });
 
 var localMediaStream = null;
 window.URL = window.URL || window.webkitURL;
 function turnon() {
-    navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia || navigator.msGetUserMedia;
     if (navigator.getUserMedia) {
-        navigator.getUserMedia({audio: false, video: true}, function(stream) {
+        navigator.getUserMedia({audio: false, video: true}, function (stream) {
             video.src = window.URL.createObjectURL(stream);
             localMediaStream = stream;
         }, onFailSoHard);
@@ -31,6 +38,12 @@ function showCamera() {
     $("#snapshot-button").show();
     $("#use-button").hide();
     $("#cancel-button").hide();
+//    $(document).click(function () {
+//        var $overlay = $("#overlay");
+//        if (!$overlay.is(":hidden")) {
+//            $overlay.hide();
+//        }
+//    });
 }
 
 // Not showing vendor prefixes or code that works cross-browser:
@@ -42,7 +55,7 @@ function success(stream) {
     video.src = window.URL.createObjectURL(stream);
 }
 
-var onFailSoHard = function(e) {
+var onFailSoHard = function (e) {
     console.log('Reeeejected!', e);
 };
 
@@ -57,6 +70,14 @@ function snapshot() {
         canvas.style.left = video.offsetLeft + "px";
         canvas.style.top = video.offsetTop + "px";
         $(canvas).show();
+
+        // crop image to make in rectangular
+        cropCanvas = document.createElement("canvas");
+        var size = Math.min(canvas.width, canvas.height);
+        cropCanvas.width = size;
+        cropCanvas.height = size;
+        var cropCtx = cropCanvas.getContext("2d");
+        cropCtx.drawImage(video, (size - canvas.width) / 2, (size - canvas.height) / 2, canvas.width, canvas.height);
     }
     $("#snapshot-button").hide();
     $("#use-button").show();
@@ -64,13 +85,6 @@ function snapshot() {
 }
 
 function usePhoto() {
-    // crop image to make in rectangular
-    var cropCanvas = document.createElement("canvas");
-    var size = Math.min(canvas.width, canvas.height);
-    cropCanvas.width = size;
-    cropCanvas.height = size;
-    var ctx = cropCanvas.getContext("2d");
-    ctx.drawImage(video, (size - canvas.width)/2, (size - canvas.height)/2, canvas.width, canvas.height);
     // "image/webp" works in Chrome 18. In other browsers, this will fall back to image/png.
     var src = cropCanvas.toDataURL('image/png');
     ServerBackend.sendPhoto(src);
