@@ -222,7 +222,7 @@ function onPhotoLike(userId, photoId) {
         for(var i = 0; i < sockets.length; ++i) {
             sockets[i].emit("like", photo.id);
         }
-        console.log("User " + user.id + " liked photo of user " + photo.sender);
+        console.log("User " + userId + " liked photo of user " + photo.sender);
     });
 }
 
