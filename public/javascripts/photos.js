@@ -35,7 +35,7 @@ $(document).ready(function(){
         });
         for(var i = 0; i < received.length; ++i) {
             var photo = received[i];
-            addPhoto(photo.id, photo.src, photo.latitude, photo.longitude, "bottom");
+            addPhotoToBottom(photo.id, photo.src, photo.latitude, photo.longitude, photo.liked);
         }
     }
     $(document).ready(function() {
@@ -49,7 +49,7 @@ function addPhoto(id, src, lat, lon, liked, position) {
     addPhotoToModel(new Photo(id, src, lat, lon, liked));
     var photo = '<div class="photo" id="'+id+'" style="background:url('+src+');">' +
         '<div class="actions_bar">' +
-        '<img class="like" src="' + liked ? "images/heart-yes.png" : "images/heart-no.png" + '"/>' +
+        '<img class="like" src="' + (liked ? "images/heart-yes.png" : "images/heart-no.png") + '"/>' +
         '<img class="geo" src="images/map.png"/>' +
         '</div>' +
         '</div>';

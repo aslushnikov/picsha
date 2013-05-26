@@ -9,10 +9,10 @@ $(document).ready(function () {
 });
 
 function getMapImageUrl(latitude, longitude) {
-    if (latitude < longitude) {
-        return "http://maps.googleapis.com/maps/api/staticmap?zoom=10&size=480x480&markers=color:blue%7C" +
-            longitude + "," + latitude + "&sensor=false"
-    }
+//    if (latitude < longitude) {
+//        return "http://maps.googleapis.com/maps/api/staticmap?zoom=10&size=480x480&markers=color:blue%7C" +
+//            longitude + "," + latitude + "&sensor=false"
+//    }
     return "http://maps.googleapis.com/maps/api/staticmap?zoom=10&size=480x480&markers=color:blue%7C" +
         latitude + "," + longitude + "&sensor=false"
 }
