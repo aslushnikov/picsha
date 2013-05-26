@@ -28,14 +28,17 @@
 <div id="overlay">
     <div class="shadow"></div>
     <div id="camera">
-        <div class="media">
+        <div class="media" style="z-index: 2;position: relative;">
             <video id="video" class="screenshot" autoplay></video>
-            <canvas width="480px" height="360px" style="width:480px; height:360px;display: none;"></canvas>
+            <canvas width="480px" height="360px" style="width:480px; height:360px;display: none;z-index: 2;position: relative;">
+            </canvas>
+            <div class="actions_bar_2">
+                <img id="cancel-button" src="images/close-pic.png" onclick="cancelPhoto()"/>
+            </div>
         </div>
         <div class="buttons">
             <img id="snapshot-button" onclick="snapshot()" src="./images/photo-icon3.png" alt="SUBMIT">
             <img id="use-button" onclick="usePhoto()" src="./images/send3.png" alt="SUBMIT" style="display: none;">
-            <img id="cancel-button" onclick="cancelPhoto()" src="./images/photo-icon3.png" alt="SUBMIT" style="display: none;">
         </div>
     </div>
 </div>
@@ -59,7 +62,6 @@
     <div id="takeapic"></div>
     <div id="logo_name"></div>
 </div>
-
 <div id="content">
     <div id="feed"></div>
 </div>

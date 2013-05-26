@@ -30,6 +30,7 @@ function showCamera() {
     $(canvas).hide();
     $("#snapshot-button").show();
     $("#use-button").hide();
+    $("#cancel-button").hide();
 }
 
 // Not showing vendor prefixes or code that works cross-browser:
@@ -49,7 +50,7 @@ function snapshot() {
     if (localMediaStream) {
         var img = $("#camera img").get(0);
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        canvas.src = canvas.toDataURL("image/webp");
+        canvas.src = canvas.toDataURL("image/png");
         canvas.style.position = "absolute";
         canvas.style.width = video.offsetWidth + "px";
         canvas.style.height = video.offsetHeight + "px";
@@ -71,7 +72,7 @@ function usePhoto() {
     var ctx = cropCanvas.getContext("2d");
     ctx.drawImage(video, (size - canvas.width)/2, (size - canvas.height)/2, canvas.width, canvas.height);
     // "image/webp" works in Chrome 18. In other browsers, this will fall back to image/png.
-    var src = cropCanvas.toDataURL('image/webp');
+    var src = cropCanvas.toDataURL('image/png');
     ServerBackend.sendPhoto(src);
     $("#overlay").fadeOut("fast");
 }
