@@ -43,7 +43,7 @@ function turnon() {
 }
 
 function showCamera() {
-    if (mobilecheck()) {
+    if (false && mobilecheck()) {
         $("#mobile-camera-fallback").trigger("click");
         return;
     }
