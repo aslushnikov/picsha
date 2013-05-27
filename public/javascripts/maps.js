@@ -13,8 +13,11 @@ function getMapImageUrl(latitude, longitude) {
 //        return "http://maps.googleapis.com/maps/api/staticmap?zoom=10&size=480x480&markers=color:blue%7C" +
 //            longitude + "," + latitude + "&sensor=false"
 //    }
-    return "http://maps.googleapis.com/maps/api/staticmap?zoom=10&size=480x480&markers=color:blue%7C" +
-        latitude + "," + longitude + "&sensor=false"
+    if (latitude) {
+        return "http://maps.googleapis.com/maps/api/staticmap?zoom=10&size=480x480&markers=color:blue%7C" +
+            latitude + "," + longitude + "&sensor=false"
+    }
+    return "images/earth.jpg";
 }
 
 function getCurrentPosition(callback, timeout) {
