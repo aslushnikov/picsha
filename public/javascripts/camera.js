@@ -21,6 +21,10 @@ function turnon() {
 }
 
 function showCamera() {
+    if (mobilecheck()) {
+        $("#mobile-camera-fallback").trigger("click");
+        return;
+    }
     var $cam = $("#camera");
     var $overlay = $("#overlay");
     $overlay.fadeIn("fast");

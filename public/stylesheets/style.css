@@ -297,3 +297,6 @@ h3 {
     padding-top: 10px;
 }
 
+#mobile-camera-fallback {
+    display: none;
+}
