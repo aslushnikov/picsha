@@ -31,7 +31,7 @@ var localMediaStream = null;
 window.URL = window.URL || window.webkitURL;
 function turnon() {
     $("#takeapic").click(function() {
-        alert("Please let us use your Cam");
+        showPopup("We're trying to initialize webcam..");
     });
     function noCameraFallback() {
         console.log("Camera API rejected");
