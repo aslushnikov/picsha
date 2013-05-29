@@ -30,15 +30,27 @@ function mobileUpload() {
 var localMediaStream = null;
 window.URL = window.URL || window.webkitURL;
 function turnon() {
+    $("#takeapic").click(function() {
+        alert("Please let us use your Cam");
+    });
+    function noCameraFallback() {
+        console.log("Camera API rejected");
+        $("#takeapic").unbind("click").click(function() {
+            alert("We cannot access you camera - no picshas though :(");
+        });
+    }
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia || navigator.msGetUserMedia;
     if (navigator.getUserMedia) {
         navigator.getUserMedia({audio: false, video: true}, function (stream) {
             video.src = window.URL.createObjectURL(stream);
             localMediaStream = stream;
-        }, onFailSoHard);
+            $("#takeapic").unbind("click").click(function() {
+                showCamera();
+            });
+        }, noCameraFallback);
     } else {
-        video.src = 'somevideo.webm'; // fallback.
+        noCameraFallback();
     }
 }
 
@@ -63,19 +75,6 @@ function showCamera() {
             $(this).fadeOut("fast");
     });
 }
-
-// Not showing vendor prefixes or code that works cross-browser:
-function fallback(e) {
-    video.src = 'fallbackvideo.webm';
-}
-
-function success(stream) {
-    video.src = window.URL.createObjectURL(stream);
-}
-
-var onFailSoHard = function (e) {
-    console.log('Reeeejected!', e);
-};
 
 function cropImageSource(target) {
     // crop image to make in rectangular
