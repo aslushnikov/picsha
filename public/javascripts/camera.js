@@ -17,12 +17,17 @@ function mobileUpload() {
         alert("You must select a valid image file!"); return;
     }
     oFReader.onload = function (oFREvent) {
-        var base64url = oFREvent.target.result;
-        mobileImageUpload.onload = function() {
-            cropImageSource(mobileImageUpload);
+        var base64 = oFREvent.target.result;
+        var bin = atob(base64.split(',')[1]);
+        var exif = EXIF.readFromBinaryFile(new BinaryFile(bin));
+        var orientation = exif.Orientation;
+        var mpImg = new MegaPixImage(oFile);
+        var resImg = document.createElement('img');
+        resImg.onload = function() {
+            cropImageSource(resImg);
             usePhoto();
-        }
-        mobileImageUpload.src = base64url;
+        };
+        mpImg.render(resImg, { maxWidth: 400, maxHeight: 400, orientation: orientation });
     }
     oFReader.readAsDataURL(oFile);
 }
@@ -30,6 +35,12 @@ function mobileUpload() {
 var localMediaStream = null;
 window.URL = window.URL || window.webkitURL;
 function turnon() {
+    if (mobilecheck()) {
+        $("#takeapic").click(function() {
+            $("#mobile-camera-fallback").trigger("click");
+        });
+        return;
+    }
     $("#takeapic").click(function() {
         showPopup("We're trying to initialize webcam..");
     });
@@ -55,10 +66,6 @@ function turnon() {
 }
 
 function showCamera() {
-    if (false && mobilecheck()) {
-        $("#mobile-camera-fallback").trigger("click");
-        return;
-    }
     var $cam = $("#camera");
     var $overlay = $("#overlay");
     $overlay.fadeIn("fast");
