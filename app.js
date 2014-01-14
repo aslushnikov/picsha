@@ -23,7 +23,13 @@ app.configure(function(){
     app.use(express.compress());
     app.use(express.bodyParser());
     app.use(express.cookieParser());
-    app.use(express.session({secret: SITE_SECRET, key: 'express.sid', store: sessionStore}));
+    app.use(express.session({
+        secret: SITE_SECRET,
+        key: 'express.sid',
+        store: sessionStore,
+        // 5 years cookie length
+        cookie: { maxAge : new Date(Date.now() + (60 * 1000 * 60 * 24 * 30 * 12 * 5)) },
+    }));
     app.use(express.methodOverride());
     app.use(app.router);
     app.use(express.static(__dirname + '/public'));
