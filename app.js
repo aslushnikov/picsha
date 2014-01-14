@@ -258,7 +258,7 @@ function onPhotoLike(userId, photoId) {
         for(var i = 0; i < sockets.length; ++i) {
             sockets[i].emit("like", photo.id);
         }
-        console.log("User " + userId + " liked photo of user " + photo.sender);
+        console.log((new Date()) + " User " + userId + " liked photo of user " + photo.sender);
     });
 }
 
@@ -272,7 +272,7 @@ function assocUserWithPhoto(user, photo) {
     for(var i = 0; i < sockets.length; ++i) {
         sockets[i].emit("photo", serverToClientPhoto(photo));
     }
-    console.log("Sent photo " + photo.id + " to user " + user.id);
+    console.log((new Date()) + " Sent photo " + photo.id + " to user " + user.id);
 }
 
 function findPhotoForUser(err, user) {
